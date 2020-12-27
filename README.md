@@ -1,15 +1,15 @@
 ## movie application
-*Demo 1*
+***Demo 1***
 ![](gif-demo/movie1.gif)
 
-*Demo 2
+***Demo 2***
 ![](gif-demo/movie2.gif)
 
-*Demo 3
+***Demo 3***
 ![](gif-demo/movie3.gif)
 
-*Demo 4
+***Demo 4***
 ![](gif-demo/movie4.gif)
 
-*Demo5
+***Demo5***
 ![](gif-demo/movie5.gif)
