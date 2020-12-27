@@ -1,5 +1,5 @@
 ## movie application
-*Demo 1
+*Demo 1*
 ![](gif-demo/movie1.gif)
 
 *Demo 2
