@@ -1,4 +1,4 @@
-package io.innofang.jokul.controller;
+package io.movie.projekt.controller;
 
 import org.junit.Ignore;
 import org.junit.Test;

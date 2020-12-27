@@ -1,4 +1,4 @@
-package io.innofang.jokul.repositories;
+package io.movie.projekt.repositories;
 
 import org.junit.Before;
 import org.junit.Ignore;
