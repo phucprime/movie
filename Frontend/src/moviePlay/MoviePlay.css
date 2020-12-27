@@ -1,0 +1,11 @@
+@import '~antd/dist/antd.css';
+@import "~video-react/dist/video-react.css";
+
+h1 {
+    font-weight: bold;
+}
+.titleMovie{
+    color: red;
+    font-style: italic;
+    text-transform: uppercase;
+}

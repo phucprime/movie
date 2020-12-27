@@ -1,0 +1,50 @@
+@import '~antd/dist/antd.css';
+
+#pad {
+    border-radius: 5px;
+    background: #e8fffa;
+    box-shadow: 3px 3px 3px #888888;
+    padding-top: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin: 20px;
+}
+
+#editPopover{
+    height: 550px;
+    overflow-y: auto;
+}
+
+#movieItem{
+    cursor: pointer;
+}
+
+#info {
+    padding: 30px;
+}
+
+.inputFiled {
+    text-align: left;
+}
+.inputEdit{
+    text-align: center;
+}
+
+#poster_hover{
+    width: 300px;
+}
+.imgExtra{
+    height: 300px;
+    width: auto;
+}
+.collapse {
+    display: none
+  }
+
+  .collapse.in {
+    display: block
+  }
+
+#editPopover{
+    width: 200%;
+}

@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "storage",
+      "type": "io.movie.project.properties.StorageProperties",
+      "sourceType": "io.movie.project.properties.StorageProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "storage.location",
+      "type": "java.lang.String",
+      "sourceType": "io.movie.project.properties.StorageProperties"
+    },
+    {
+      "name": "storage.source",
+      "type": "java.lang.String",
+      "sourceType": "io.movie.project.properties.StorageProperties"
+    }
+  ],
+  "hints": []
+}

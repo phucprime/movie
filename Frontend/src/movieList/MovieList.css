@@ -1,0 +1,16 @@
+@import '~antd/dist/antd.css';
+
+#pagination {
+    text-align: center;
+}
+
+#movieItem {
+    font-weight: bold;
+}
+#list_span{
+    width: 150px;
+    position: relative;
+    left: 12%;
+    font-size: 24px;
+    color: rgb(126, 126, 126);
+}
