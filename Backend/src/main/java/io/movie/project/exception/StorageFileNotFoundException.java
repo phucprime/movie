@@ -1,8 +1,6 @@
 package io.movie.project.exception;
 
-/**
- * Created by  Fang on 2018/4/28.
- */
+
 public class StorageFileNotFoundException extends StorageException {
     public StorageFileNotFoundException(Integer status, String message) {
         super(status, message);

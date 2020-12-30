@@ -8,9 +8,7 @@ import io.movie.project.domain.Type;
 
 import java.io.IOException;
 
-/**
- * Created by  Fang on 2018/4/27.
- */
+
 public class TypeSerialize extends JsonSerializer<Type> {
 
     @Override

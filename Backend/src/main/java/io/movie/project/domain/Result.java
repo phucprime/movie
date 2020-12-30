@@ -1,8 +1,6 @@
 package io.movie.project.domain;
 
-/**
- * Created by  Fang on 2018/4/25.
- */
+
 public class Result<T> {
 
     private Integer status;

@@ -4,9 +4,7 @@ package io.movie.project.utils;
 import io.movie.project.domain.Result;
 import io.movie.project.enums.ResultEnum;
 
-/**
- * Created by  Fang on 2018/4/25.
- */
+
 public class ResultUtil {
     public static <T> Result<T> success(ResultEnum resultEnum, T resultData) {
         Result<T> result = new Result<>();

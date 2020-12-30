@@ -5,9 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 
-/**
- * Created by  Fang on 2018/4/28.
- */
 
 @Component
 @ConfigurationProperties(value = "storage")

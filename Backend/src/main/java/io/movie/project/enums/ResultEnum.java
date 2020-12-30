@@ -1,8 +1,6 @@
 package io.movie.project.enums;
 
-/**
- * Created by Fang on 2018/4/25.
- */
+
 public enum ResultEnum {
     SIGN_UP(1, "successfully to add user"),
     SIGN_IN(1, "successfully to login"),

@@ -7,9 +7,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-/**
- * Created by  Fang on 2018/4/28.
- */
+
 public interface StorageService {
     void init();
     void store(File file);

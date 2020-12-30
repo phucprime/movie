@@ -18,9 +18,6 @@ import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by  Fang on 2018/4/28.
- */
 
 @RestController
 public class MovieUploadController {

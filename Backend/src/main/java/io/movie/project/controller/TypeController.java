@@ -15,9 +15,7 @@ import io.movie.project.utils.ResultUtil;
 
 import java.util.List;
 
-/**
- * Created by  Fang on 2018/5/9.
- */
+
 @RestController
 public class TypeController {
 

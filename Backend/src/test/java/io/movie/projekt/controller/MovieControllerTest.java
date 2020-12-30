@@ -12,9 +12,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import io.movie.project.repositories.MovieRepository;
 
-/**
- * Created by Inno Fang on 2018/4/27.
- */
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc

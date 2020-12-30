@@ -21,9 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-/**
- * Created by  Fang on 2018/4/28.
- */
+
 @Service
 public class FileSystemStorageService implements StorageService {
 

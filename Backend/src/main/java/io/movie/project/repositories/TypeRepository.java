@@ -10,9 +10,7 @@ import io.movie.project.domain.Type;
 
 import java.util.List;
 
-/**
- * Created by  Fang on 2018/4/27.
- */
+
 public interface TypeRepository extends JpaRepository<Type, Long> {
     Type findByName(String name);
 

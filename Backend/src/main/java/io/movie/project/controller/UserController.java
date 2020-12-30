@@ -11,9 +11,7 @@ import io.movie.project.enums.ResultEnum;
 import io.movie.project.repositories.UserRepository;
 import io.movie.project.utils.ResultUtil;
 
-/**
- * Created by  Fang on 2018/4/28.
- */
+
 @RestController
 public class UserController {
 

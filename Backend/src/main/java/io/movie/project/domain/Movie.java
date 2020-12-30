@@ -3,9 +3,7 @@ package io.movie.project.domain;
 import javax.persistence.*;
 import java.util.Set;
 
-/**
- * Created by  Fang on 2018/4/27.
- */
+
 @Entity
 public class Movie {
 
@@ -13,41 +11,41 @@ public class Movie {
     @GeneratedValue
     private Long id;
 
-    // 电影名
+
     @Column(unique = true)
     private String title;
 
-    // 豆瓣评分
+
     private Double score;
 
-    // 别名
+
     private String alias;
 
-    // 上映日期
+
     @Column(name = "release_date")
     private String releaseDate;
 
-    // 片长
+
     private Integer length;
 
-    // 导演
+
     private String director;
 
-    // 编剧
+
     private String screenwriter;
 
-    // 主演
+
     @Column(columnDefinition = "text")
     private String cast;
 
-    // 剧情
+
     @Column(columnDefinition = "text")
     private String overview;
 
-    // 海报
+
     private String post;
 
-    // 类型
+
     @ManyToMany
     @JoinTable(name = "movie_type",
             joinColumns = @JoinColumn(name = "movie_id"),

@@ -34,11 +34,11 @@ public class HttpAspect {
        
         logger.info("ip={}", request.getRemoteAddr());
 
-        //
+
         logger.info("class_method={}", joinPoint.getSignature().getDeclaringTypeName() + "."
                 + joinPoint.getSignature().getName());
 
-        //
+
         logger.info("args={}", joinPoint.getArgs());
     }
 
