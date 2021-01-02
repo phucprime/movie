@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>io.innofang</groupId>
-	<artifactId>knock-knock</artifactId>
+	<groupId>io.movie</groupId>
+	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>knock-knock</name>
+	<name>backend</name>
 	<description>A movie site built by spring boot and react.js</description>
 
 	<parent>
@@ -59,13 +59,9 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-  <groupId>org.springframework.boot</groupId>
-  <artifactId>spring-boot-starter-jdbc</artifactId>
-</dependency>
-<dependency>
-  <groupId>org.postgresql</groupId>
-  <artifactId>postgresql</artifactId>
-</dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -76,6 +72,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

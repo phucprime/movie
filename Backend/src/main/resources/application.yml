@@ -19,7 +19,14 @@ spring:
 server:
   servlet:
     context-path: /
+  port: 8080
 
 storage:
   location: upload-dir
   source: /Users/nguyenhoangphuc/Desktop/Video/%s.mp4
+
+org:
+  springframework:
+    boot:
+      autoconfigure:
+        EnableAutoConfiguration: true
