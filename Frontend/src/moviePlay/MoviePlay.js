@@ -39,8 +39,7 @@ class MoviePlay extends React.Component {
             .then(req => {
                 setTimeout(hide, 1);
                 if (req.status === 0) {
-                    // title của phim phải khớp với tên file để có thể load được video từ local service
-                    message.error('Failed! Please make sure the title MATCHES with the video file name!');
+                    message.error('Failed! Make sure the title MATCHES with the video filename');
                 } else {
                     message.success('Loaded Successfully');
                     this.setState({src: req.data, isLoading: false})
@@ -54,10 +53,9 @@ class MoviePlay extends React.Component {
         const source = src === '' ? '' :
             <Tooltip placement="right" title={text}>
                 <a href={src}>
-                    <Button icon="download" size="large" shape="circle"/>
-                    <span>
+                    <Button icon="download" size="large" shape='round'>
                         Download {this.props.match.params.movie}
-                    </span>
+                    </Button>
                 </a>
             </Tooltip>;
         return (
@@ -71,17 +69,17 @@ class MoviePlay extends React.Component {
                                 {this.props.match.params.movie}
                             </span>
                         </h1>
-                        <Button onClick={() => this.props.history.goBack()}>
+                        <hr/>
+                        <Button onClick={() => this.props.history.goBack()} style={{ float:'right' }}>
                             Back
                         </Button>
-                        <hr/>
                         {source}
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col span={4}/>
-                    <Col span={18}>
+                    <Col span={15}>
                     <Player playsInline src={src}>
                         <LoadingSpinner />
                         <BigPlayButton position="center"/>

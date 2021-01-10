@@ -6,9 +6,7 @@ import {
     Popover
 } from 'antd';
 
-import {
-    Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Api from '../Api'
 import './MovieInfo.css'

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.4.4",
+    "antd": "^3.9",
     "devextreme-react": "^20.2.4",
     "json-loader": "^0.5.7",
     "react": "^16.14.0",

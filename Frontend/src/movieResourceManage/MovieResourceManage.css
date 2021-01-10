@@ -44,3 +44,18 @@
   .collapse.in {
     display: block
   }
+
+  table, th, td {
+    border-collapse: collapse;
+  }
+
+  th{
+      background-color: #1890ff;
+      color: white;
+      padding: 1em;
+  }
+
+  td{
+      background-color: snow;
+      padding: 1em;
+  }

@@ -18,7 +18,8 @@ import {
     Pagination,
     notification,
     Spin,
-    Modal
+    Modal,
+    Tag
 } from 'antd';
 import IconTitle from '../iconTitle/IconTitle'
 import './MovieResourceManage.css'
@@ -294,7 +295,7 @@ class MovieResourceManage extends React.Component {
     }
 
     render() {
-        let increaseKey = 0;
+        let increaseKey = 10;
         // data : danh sách phim, dùng cho trang xóa phim
         //  count : danh sách phim của một trang, dùng để phân trang
         let {data, count} = this.state;
@@ -547,14 +548,17 @@ class MovieResourceManage extends React.Component {
 
                                 <TabPane tab={<span><Icon type="edit"/>Edit Movie</span>} key={increaseKey++}>
                                     <Row>
-                                            <Col span={2}/>
-                                            <Col span={2}/>
-                                            <Col span={2}/>
-                                            <Col span={12}>
-                                            <table className="table table-striped table-bordered" style={{ textAlign: 'center' }}>
-                                                <thead className="bg-dark">
-                                                <tr className="notbold">
+                                            <Col>
+                                            <table style={{ textAlign: 'center', width:'100%' }}>
+                                                <thead>
+                                                <tr className="rowTitle">
                                                     <th>Title</th>
+                                                    <th>Alias</th>
+                                                    <th>Cast</th>
+                                                    <th>Director</th>
+                                                    <th>Duration</th>
+                                                    <th>Type</th>
+                                                    <th>Release Date</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
@@ -567,8 +571,21 @@ class MovieResourceManage extends React.Component {
                                                         data.map(item =>
                                                                 <tr key={item.id}>
                                                                     <td> {item.title} </td>
+                                                                    <td> {item.alias} </td>
+                                                                    <td> {item.cast} </td>
+                                                                    <td> {item.director} </td>
+                                                                    <td> {item.length} </td>
                                                                     <td>
-                                                                        <button className="btn btn-success" 
+                                                                        {item.type.map(
+                                                                            type => (
+                                                                                <Tag color="blue" key={item.title+type}>
+                                                                                    {type}
+                                                                                </Tag>)
+                                                                        )}
+                                                                    </td>
+                                                                    <td> {item.releaseDate} </td>
+                                                                    <td>
+                                                                        <Button className="btn btn-dark" 
                                                                                 onClick={
                                                                                   () => { 
                                                                                         this.handleRecordsClick(this);
@@ -576,15 +593,15 @@ class MovieResourceManage extends React.Component {
                                                                                     }
                                                                                 }
                                                                                 style={{ cursor:'pointer' }}
-                                                                        >
-                                                                            Edit
-                                                                        </button>
+                                                                                icon='edit'
+                                                                                type='primary'
+                                                                        />
                                                                     </td>
                                                                 </tr>
                                                             )
                                                     }
                                                     </tbody>
-                                              </table>
+                                                </table>
                                               <Modal title="Update Movie"
                                                         wrapClassName="vertical-center-modal"
                                                         visible={this.state.modalIsVisible}
