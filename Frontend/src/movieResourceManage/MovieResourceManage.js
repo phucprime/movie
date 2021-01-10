@@ -17,11 +17,14 @@ import {
     Popover,
     Pagination,
     notification,
-    Spin
+    Spin,
+    Modal
 } from 'antd';
 import IconTitle from '../iconTitle/IconTitle'
 import './MovieResourceManage.css'
 import Api from '../Api'
+import 'reactjs-popup/dist/index.css'
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -41,6 +44,8 @@ class MovieResourceManage extends React.Component {
             count: 0,
             selectedMovies: [],
             fileList: [],
+            modalIsVisible: false,
+            itemData: []
         };
     }
 
@@ -83,7 +88,18 @@ class MovieResourceManage extends React.Component {
             .catch(error => console.error('Error:', error));
     }
 
-    // gửi thông tin phim khi admin bấm thêm mới
+    setIsModalVisible(value) {
+        this.setState({modalIsVisible: value});
+    };
+
+    setItemData(item) {
+        this.setState({itemData: item});
+    }
+
+    handleRecordsClick(e) {
+        this.setIsModalVisible(true);
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         this.setState({uploadLoading: true});
@@ -135,7 +151,6 @@ class MovieResourceManage extends React.Component {
             });
     };
 
-    // gửi thông tin phim khi admin bấm thêm mới
     handleSubmitUpdate(e) {
         e.preventDefault();
         this.setState({updateLoading: true});
@@ -535,195 +550,217 @@ class MovieResourceManage extends React.Component {
                                             <Col span={2}/>
                                             <Col span={2}/>
                                             <Col span={2}/>
-                                            <Col span={10}>
-                                                {
-                                                    (data[0] == null || count == null) 
-                                                    ? 
-                                                    <div></div>
-                                                    :
-                                                    data.map(item =>
-                                                            <div id="movieItem" key={increaseKey++}>
-                                                                <Popover id="editPopover" placement="right" title="Update movie" content={
-                                                                    <div id="movieUpdate">
-                                                                            <Form onSubmit={this.handleSubmitUpdate.bind(this)}>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Poster(Url)"
-                                                                                    extra={
-                                                                                        <img className="imgExtra" 
-                                                                                        src={this.state.post} alt="post" />
+                                            <Col span={12}>
+                                            <table className="table table-striped table-bordered" style={{ textAlign: 'center' }}>
+                                                <thead className="bg-dark">
+                                                <tr className="notbold">
+                                                    <th>Title</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody key={increaseKey++}>
+                                                    {
+                                                        (data[0] == null || count == null) 
+                                                        ? 
+                                                        <tr></tr>
+                                                        :
+                                                        data.map(item =>
+                                                                <tr key={item.id}>
+                                                                    <td> {item.title} </td>
+                                                                    <td>
+                                                                        <button className="btn btn-success" 
+                                                                                onClick={
+                                                                                  () => { 
+                                                                                        this.handleRecordsClick(this);
+                                                                                        this.setItemData(item);
                                                                                     }
-                                                                                    onMouseOver={this.onHandleChangePostUrl.bind(this)}
-                                                                                    >
-                                                                                    {getFieldDecorator('postUpdate', {
-                                                                                        rules: [{required: true, 
-                                                                                                message: 'Please enter the poster URL!'}],
-                                                                                                initialValue: item.post
-                                                                                    })(
-                                                                                        <Input required={true} 
-                                                                                            onChange={this.onHandleChangePostUrl.bind(this)}
-                                                                                            className="inputFiled"/>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Movie Name">
-                                                                                    {getFieldDecorator('titleUpdate', {
-                                                                                        rules: [{required: true,
-                                                                                        message: 'Please enter the Movie name!'}],
-                                                                                        initialValue: item.title
-                                                                                    })(
-                                                                                        <Input placeholder="Must be same with video file name" 
-                                                                                        required={true} className="inputFiled"/>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Score"
-                                                                                >
-                                                                                    {getFieldDecorator('scoreUpdate',
-                                                                                    {initialValue: item.score}
-                                                                                    )(
-                                                                                        <Slider max={10}
-                                                                                                step={1}
-                                                                                                marks={{
-                                                                                                    0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
-                                                                                                    6: '6', 7: '7', 8: '8', 9: '9', 10: '10'
-                                                                                                }}/>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Alias">
-                                                                                    {getFieldDecorator('aliasUpdate', {
-                                                                                        rules: [{required: true,
-                                                                                        message: 'Please enter a movie Alias!'}],
-                                                                                        initialValue: item.alias
-                                                                                    })(
-                                                                                        <Input required={true} className="inputFiled"/>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Duration"
-                                                                                >
-                                                                                    {getFieldDecorator('lengthUpdate', {initialValue: item.length})(
-                                                                                        <InputNumber required={true} min={1}/>
-                                                                                    )}
-                                                                                    <span className="ant-form-text"> minutes</span>
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Release Date">
-                                                                                    {getFieldDecorator('releaseDateUpdate', {
-                                                                                        rules: [{required: true, 
-                                                                                                message: 'Please enter the movie Release date!'}],
-                                                                                                initialValue: item.releaseDate
-                                                                                    })(
-                                                                                        <Input required={true} className="inputFiled"/>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Director">
-                                                                                    {getFieldDecorator('directorUpdate', {
-                                                                                        rules: [{required: true, 
-                                                                                                message: 'Please enter the Director!'}],
-                                                                                                initialValue: item.director
-                                                                                    })(
-                                                                                        <Input required={true} className="inputFiled"/>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Trailer(Embedded URL)">
-                                                                                    {getFieldDecorator('screenwriterUpdate', {
-                                                                                        rules: [{required: true, 
-                                                                                                message: 'Please enter the Link trailer!'}],
-                                                                                                initialValue: item.screenwriter
-                                                                                    })(
-                                                                                        <Input required={true} className="inputFiled"/>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Actor Information">
-                                                                                    {getFieldDecorator('castUpdate', {
-                                                                                        rules: [{required: true, 
-                                                                                                message: 'Please enter the Actor Information!'}],
-                                                                                                initialValue: item.cast
-                                                                                    })(
-                                                                                        <Input required={true} className="inputFiled"/>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Movie Type"
-                                                                                    hasFeedback>
-                                                                                    {getFieldDecorator('movieTypeUpdate', {
-                                                                                        rules: [
-                                                                                            {required: true, message: 'Please select a Movie Type!'},
-                                                                                        ],
-                                                                                        initialValue: item.type
-                                                                                    })(
-                                                                                        <Select required
-                                                                                                mode="tags"
-                                                                                                style={{width: '100%'}}
-                                                                                                tokenSeparators={[',']}
-                                                                                                placeholder="Choose movie type">
-                                                                                            <Option value="Plot">Plot</Option>
-                                                                                            <Option value="Comedy">Comedy</Option>
-                                                                                            <Option value="Horror">Horror</Option>
-                                                                                            <Option value="Action">Action</Option>
-                                                                                            <Option value="Love">Love</Option>
-                                                                                            <Option value="Crime">Crime</Option>
-                                                                                            <Option value="Terror">Terror</Option>
-                                                                                            <Option value="Adventure">Adventure</Option>
-                                                                                            <Option value="Suspense">Suspense</Option>
-                                                                                            <Option value="Science">Science</Option>
-                                                                                            <Option value="Family">Family</Option>
-                                                                                            <Option value="Fantastic">Fantastic</Option>
-                                                                                            <Option value="Animation">Animation</Option>
-                                                                                            <Option value="War">War</Option>
-                                                                                            <Option value="History">History</Option>
-                                                                                            <Option value="Biography">Biography</Option>
-                                                                                            <Option value="Music">Music</Option>
-                                                                                            <Option value="Sing and dance">Sing and dance</Option>
-                                                                                            <Option value="Sport">Sport</Option>
-                                                                                            <Option value="Westerm">Westerm</Option>
-                                                                                            <Option value="Documentary">Documentary</Option>
-                                                                                        </Select>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    {...formItemLayout}
-                                                                                    label="Description">
-                                                                                    {getFieldDecorator('overviewUpdate', {
-                                                                                        rules: [{required: true, 
-                                                                                                message: 'Please enter the description!'}],
-                                                                                                initialValue: item.overview
-                                                                                    })(
-                                                                                        <TextArea required={true} className="inputFiled" rows={5}/>
-                                                                                    )}
-                                                                                </FormItem>
-                                                                                <FormItem
-                                                                                    wrapperCol={{span: 12, offset: 6}}
-                                                                                >
-                                                                                    <Button type="primary" htmlType="submit"
-                                                                                            icon="edit"
-                                                                                            loading={this.state.updateLoading}> Update </Button>
-                                                                                </FormItem>
-                                                                            </Form>
-                                                                        </div>
-                                                                    }
+                                                                                }
+                                                                        >
+                                                                            Edit
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                    }
+                                                    </tbody>
+                                              </table>
+                                              <Modal title="Update Movie"
+                                                        wrapClassName="vertical-center-modal"
+                                                        visible={this.state.modalIsVisible}
+                                                        onCancel={() => window.location.reload()}
+                                                        okText="OK"
+                                                        cancelText="Cancel"
+                                                >
+                                                        <Form onSubmit={this.handleSubmitUpdate.bind(this)}>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Poster(Url)"
+                                                                extra={
+                                                                    <img className="imgExtra" 
+                                                                    src={this.state.itemData.post} alt="post" />
+                                                                }
                                                                 >
-                                                                    <span>
-                                                                            {item.title}
-                                                                    </span>
-                                                                    </Popover><p></p>
-                                                            </div>
-                                                        )
-                                                }
+                                                                {getFieldDecorator('postUpdate', {
+                                                                    rules: [{required: true, 
+                                                                            message: 'Please enter the poster URL!'}],
+                                                                            initialValue: this.state.itemData.post
+                                                                })(
+                                                                    <Input required={true} 
+                                                                        onChange={this.onHandleChangePostUrl.bind(this)}
+                                                                        className="inputFiled"/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Movie Name">
+                                                                {getFieldDecorator('titleUpdate', {
+                                                                    rules: [{required: true,
+                                                                    message: 'Please enter the Movie name!'}],
+                                                                    initialValue: this.state.itemData.title
+                                                                })(
+                                                                    <Input placeholder="Must be same with video file name" 
+                                                                    required={true} className="inputFiled"/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Score"
+                                                            >
+                                                                {getFieldDecorator('scoreUpdate',
+                                                                {initialValue: this.state.itemData.score}
+                                                                )(
+                                                                    <Slider max={10}
+                                                                            step={1}
+                                                                            marks={{
+                                                                                0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
+                                                                                6: '6', 7: '7', 8: '8', 9: '9', 10: '10'
+                                                                            }}/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Alias">
+                                                                {getFieldDecorator('aliasUpdate', {
+                                                                    rules: [{required: true,
+                                                                    message: 'Please enter a movie Alias!'}],
+                                                                    initialValue: this.state.itemData.alias
+                                                                })(
+                                                                    <Input required={true} className="inputFiled"/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Duration"
+                                                            >
+                                                                {getFieldDecorator('lengthUpdate', 
+                                                                {initialValue: this.state.itemData.length})(
+                                                                    <InputNumber required={true} min={1}/>
+                                                                )}
+                                                                <span className="ant-form-text"> minutes</span>
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Release Date">
+                                                                {getFieldDecorator('releaseDateUpdate', {
+                                                                    rules: [{required: true, 
+                                                                            message: 'Please enter the movie Release date!'}],
+                                                                            initialValue: this.state.itemData.releaseDate
+                                                                })(
+                                                                    <Input required={true} className="inputFiled"/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Director">
+                                                                {getFieldDecorator('directorUpdate', {
+                                                                    rules: [{required: true, 
+                                                                            message: 'Please enter the Director!'}],
+                                                                            initialValue: this.state.itemData.director
+                                                                })(
+                                                                    <Input required={true} className="inputFiled"/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Trailer(Embedded URL)">
+                                                                {getFieldDecorator('screenwriterUpdate', {
+                                                                    rules: [{required: true, 
+                                                                            message: 'Please enter the Link trailer!'}],
+                                                                            initialValue: this.state.itemData.screenwriter
+                                                                })(
+                                                                    <Input required={true} className="inputFiled"/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Actor Information">
+                                                                {getFieldDecorator('castUpdate', {
+                                                                    rules: [{required: true, 
+                                                                            message: 'Please enter the Actor Information!'}],
+                                                                            initialValue: this.state.itemData.cast
+                                                                })(
+                                                                    <Input required={true} className="inputFiled"/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Movie Type"
+                                                                hasFeedback>
+                                                                {getFieldDecorator('movieTypeUpdate', {
+                                                                    rules: [
+                                                                        {required: true, message: 'Please select a Movie Type!'},
+                                                                    ],
+                                                                    initialValue: this.state.itemData.type
+                                                                })(
+                                                                    <Select required
+                                                                            mode="tags"
+                                                                            style={{width: '100%'}}
+                                                                            tokenSeparators={[',']}
+                                                                            placeholder="Choose movie type">
+                                                                        <Option value="Plot">Plot</Option>
+                                                                        <Option value="Comedy">Comedy</Option>
+                                                                        <Option value="Horror">Horror</Option>
+                                                                        <Option value="Action">Action</Option>
+                                                                        <Option value="Love">Love</Option>
+                                                                        <Option value="Crime">Crime</Option>
+                                                                        <Option value="Terror">Terror</Option>
+                                                                        <Option value="Adventure">Adventure</Option>
+                                                                        <Option value="Suspense">Suspense</Option>
+                                                                        <Option value="Science">Science</Option>
+                                                                        <Option value="Family">Family</Option>
+                                                                        <Option value="Fantastic">Fantastic</Option>
+                                                                        <Option value="Animation">Animation</Option>
+                                                                        <Option value="War">War</Option>
+                                                                        <Option value="History">History</Option>
+                                                                        <Option value="Biography">Biography</Option>
+                                                                        <Option value="Music">Music</Option>
+                                                                        <Option value="Sing and dance">Sing and dance</Option>
+                                                                        <Option value="Sport">Sport</Option>
+                                                                        <Option value="Westerm">Westerm</Option>
+                                                                        <Option value="Documentary">Documentary</Option>
+                                                                    </Select>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
+                                                                label="Description">
+                                                                {getFieldDecorator('overviewUpdate', {
+                                                                    rules: [{required: true, 
+                                                                            message: 'Please enter the description!'}],
+                                                                            initialValue: this.state.itemData.overview
+                                                                })(
+                                                                    <TextArea required={true} className="inputFiled" rows={5}/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                wrapperCol={{span: 12, offset: 6}}
+                                                            >
+                                                                <Button type="primary" htmlType="submit"
+                                                                        icon="edit"
+                                                                        loading={this.state.updateLoading}> Update </Button>
+                                                            </FormItem>
+                                                        </Form>
+                                                </Modal>  
                                             </Col>
                                         </Row>
                                         <br/>

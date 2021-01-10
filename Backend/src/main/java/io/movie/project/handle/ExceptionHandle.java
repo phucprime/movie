@@ -17,7 +17,6 @@ public class ExceptionHandle {
 
     public static final Logger logger = LoggerFactory.getLogger(ExceptionHandle.class);
 
-    @SuppressWarnings("rawtypes")
 	@ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result handle(Exception e) {

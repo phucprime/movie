@@ -10,10 +10,8 @@ import java.io.File;
 @ConfigurationProperties(value = "storage")
 public class StorageProperties {
 
-    // 文件上传源
     private String source;
 
-    // 上传文件存储位置
     private String location;
 
     public String getLocation() {

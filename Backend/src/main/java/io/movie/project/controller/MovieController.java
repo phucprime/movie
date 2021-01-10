@@ -50,7 +50,6 @@ public class MovieController {
         return ResultUtil.success(ResultEnum.GET_MOVIE_DETAIL, movie);
     }
 
-    @SuppressWarnings("rawtypes")
 	@PostMapping(value = "/add-movie/{type}")
     public Result addMovieInfo(@PathVariable("type") String type,
                            @RequestBody Movie movie) {
@@ -66,8 +65,7 @@ public class MovieController {
         movieRepository.save(movie);
         return ResultUtil.success(ResultEnum.ADD_MOVIE);
     }
-    
-    @SuppressWarnings("rawtypes")
+
    	@PostMapping(value = "/update-movie/{type}")
        public Result updateMovieInfo(@PathVariable("type") String type,
                               @RequestBody Movie movie) {
@@ -83,8 +81,7 @@ public class MovieController {
            movieRepository.save(movie);
            return ResultUtil.success(ResultEnum.MOVIE_UPDATED);
     }
-    
-    @SuppressWarnings("rawtypes")
+
 	@PostMapping(value = "/delete/{title}")
     public Result deleteMovieInfo(@PathVariable("title") String title) {
         Movie movie = movieRepository.findByTitle(title);
@@ -95,7 +92,6 @@ public class MovieController {
         return ResultUtil.success(ResultEnum.DELETE_MOVIE);
     }
 
-    @SuppressWarnings("rawtypes")
 	@PostMapping(value = "/delete-more/{movies}")
     public Result deleteMovies(@PathVariable("movies") String selectedMovies) {
         for (String movie : selectedMovies.split("&")) {

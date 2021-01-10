@@ -62,7 +62,6 @@ class Header extends React.Component {
     handleButtonClick(e) {
         this.setModalVisible(true);
     }
-
     // xử lý đăng nhập
     handleSignIn(e) {
 

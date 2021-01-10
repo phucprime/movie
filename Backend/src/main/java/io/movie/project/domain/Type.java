@@ -33,6 +33,7 @@ import java.util.Set;
         resultSetMapping = "Movie"
 )
 @JsonSerialize(using = TypeSerialize.class)
+
 public class Type {
 
     @JsonIgnore

@@ -6,10 +6,8 @@ const Api = {
 
     'movieCount': () => `${root}/movie-count`,
 
-    // xóa nhiều phim
     'deleteMovies': (movies) => `${root}/delete-more/${movies.join("&")}`,
 
-    // xóa một phim
     'deleteMovie': (title) => `${root}/delete/${title}`,
 
     'addMovieInfo': (type) => `${root}/add-movie/${type.join("&")}`,
@@ -18,10 +16,8 @@ const Api = {
 
     'movieDetail': (title) => `${root}/${title}`,
 
-    // danh sách thể loại phim
     'types': () => `${root}/types`,
 
-    // số lượng tất cả các thể loại phim
     'typeCount': (type) => `${root}/count/${type}`,
 
     'categoryList': (type, page) => `${root}/${type}/${page}`,
