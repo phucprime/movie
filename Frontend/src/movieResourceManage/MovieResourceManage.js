@@ -588,9 +588,8 @@ class MovieResourceManage extends React.Component {
                                                         wrapClassName="vertical-center-modal"
                                                         visible={this.state.modalIsVisible}
                                                         onCancel={() => this.setIsModalVisible(false)}
-                                                        okText="OK"
-                                                        cancelText="Cancel"
                                                         destroyOnClose={true}
+                                                        footer={null}
                                                 >
                                                         <Form onSubmit={this.handleSubmitUpdate.bind(this)}>
                                                             <FormItem
