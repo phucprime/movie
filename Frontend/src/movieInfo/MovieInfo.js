@@ -44,6 +44,16 @@ class MovieInfo extends React.Component {
             return <div></div>;
         }
 
+        function validURL(strData) {
+            var regex = new RegExp('^(https?:\\/\\/)?'+
+              '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain
+              '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip v4 address
+              '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port & path
+              '(\\?[;&a-z\\d%_.~+=-]*)?'+ // string query
+              '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+            return !!regex.test(strData);
+        }
+        
         const play = (<div>
             <div id="play">
                 <Link to={`/play/${this.props.match.params.title}`}>
@@ -71,7 +81,7 @@ class MovieInfo extends React.Component {
                         </div>
                     </Col>
                     <Col span={1}/>
-                    <Col span={5}>
+                    <Col span={4}>
                         <h1>{data.title}</h1>
                         <hr/>
                         <p>Rate：<span id="score">{data.score}/10</span></p>
@@ -88,21 +98,25 @@ class MovieInfo extends React.Component {
                     </Col>
                     <Col span={1}/>
                     <Col span={7} id="overview">
-                        <h1>Overview - Trailer</h1>
+                        <h1>Overview and Trailer</h1>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;{data.overview}</p>
-                        {/* Nhúng video làm trailer phim, 
-                        người dùng nhập url video dạng embedded lúc thêm phim mới, 
-                        url sẽ được thêm vào src của thẻ iframe => video trailer */}
-                        <iframe playsInline
-                                src={`${data.screenwriter}`} 
-                                width="100%" 
-                                height="auto" 
-                                frameBorder="0" 
-                                allow="autoplay; fullscreen" 
-                                allowFullScreen
-                                title="Film's Trailer"
-                                >
-                        </iframe>
+                        {/* embedded url insert here */}
+                        {
+                            validURL(data.screenwriter) 
+                            ?
+                                <iframe playsInline
+                                        src={`${data.screenwriter}`} 
+                                        width="100%" 
+                                        height="auto" 
+                                        frameBorder="0" 
+                                        allow="autoplay; fullscreen" 
+                                        allowFullScreen
+                                        title="Film's Trailer"
+                                        >
+                                </iframe>
+                            :
+                                <p style={{ color: 'red' }}>No trailer available.</p>
+                        }
                     </Col>
                     <Col span={4}/>
                 </Row>

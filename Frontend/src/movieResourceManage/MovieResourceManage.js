@@ -365,7 +365,7 @@ class MovieResourceManage extends React.Component {
                                                     Upload Movie
                                                 </span>
                                             } 
-                                        key={increaseKey++}>
+                                        key='1'>
                                     <div id="info">
                                         <Form onSubmit={this.handleSubmit.bind(this)}>
                                             <FormItem
@@ -575,6 +575,7 @@ class MovieResourceManage extends React.Component {
                                                                                         this.setItemData(item);
                                                                                     }
                                                                                 }
+                                                                                style={{ cursor:'pointer' }}
                                                                         >
                                                                             Edit
                                                                         </button>
