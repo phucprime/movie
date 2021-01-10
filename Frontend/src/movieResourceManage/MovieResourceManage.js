@@ -245,7 +245,7 @@ class MovieResourceManage extends React.Component {
             notification.warning(
                 {
                     message: 'Are you want to delete?',
-                    description: this.state.selectedMovies.join("\n"),
+                    description: this.state.selectedMovies.join("\t"),
                     key,
                     btn: (
                         <Button icon="delete" type="danger" 
@@ -551,14 +551,14 @@ class MovieResourceManage extends React.Component {
                                             <Col>
                                             <table style={{ textAlign: 'center', width:'100%' }}>
                                                 <thead>
-                                                <tr className="rowTitle">
+                                                <tr>
                                                     <th>Title</th>
                                                     <th>Alias</th>
                                                     <th>Cast</th>
                                                     <th>Director</th>
                                                     <th>Duration</th>
                                                     <th>Type</th>
-                                                    <th>Release Date</th>
+                                                    <th>Release</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
@@ -578,7 +578,7 @@ class MovieResourceManage extends React.Component {
                                                                     <td>
                                                                         {item.type.map(
                                                                             type => (
-                                                                                <Tag color="blue" key={item.title+type}>
+                                                                                <Tag color="blue" key={item.title + type}>
                                                                                     {type}
                                                                                 </Tag>)
                                                                         )}
@@ -783,13 +783,13 @@ class MovieResourceManage extends React.Component {
                                             </Col>
                                         </Row>
                                         <br/>
-                                        <Row>
-                                            <Col span={6}/>
+                                        <Row style={{ marginBottom: '2em' }}>
+                                            <Col span={10}/>
                                             <Col span={10}>
                                                 <Pagination defaultCurrent={1} total={count} defaultPageSize={12}
                                                             onChange={this.onPageChange.bind(this)} />
-                                            </Col><br />
-                                        </Row> 
+                                            </Col>
+                                        </Row>
                                 </TabPane>
 
                                 {/* Tab xóa phim */}

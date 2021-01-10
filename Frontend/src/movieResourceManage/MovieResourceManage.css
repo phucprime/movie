@@ -2,17 +2,12 @@
 
 #pad {
     border-radius: 5px;
-    background: #e8fffa;
-    box-shadow: 3px 3px 3px #888888;
+    background-color: white;
+    box-shadow: 1px 2px 2px 4px #c3e0fa;
     padding-top: 30px;
     padding-left: 50px;
     padding-right: 50px;
     margin: 20px;
-}
-
-#editPopover{
-    height: 550px;
-    overflow-y: auto;
 }
 
 #movieItem{
@@ -41,21 +36,39 @@
     display: none
   }
 
-  .collapse.in {
-    display: block
-  }
+.collapse.in {
+display: block
+}
 
-  table, th, td {
-    border-collapse: collapse;
-  }
+table, th, td {
+border-collapse: collapse;
+}
 
-  th{
-      background-color: #1890ff;
-      color: white;
-      padding: 1em;
-  }
+th{
+    background-color: #1890ff;
+    color: white;
+    padding: 1em;
+}
+th:nth-child(1){
+    border-radius: 0.6em 0em 0em 0em;
+}
 
-  td{
-      background-color: snow;
-      padding: 1em;
-  }
+th:nth-last-child(1){
+border-radius: 0em 0.6em 0em 0em;
+}
+
+td{
+    padding: 1em;
+}
+
+tr:nth-child(odd){
+    background-color: white;
+}
+
+tr:nth-child(even){
+    background-color: rgba(237, 238, 238, 0.979);
+}
+
+tr:hover{
+    background-color: rgb(215, 226, 247);
+}
