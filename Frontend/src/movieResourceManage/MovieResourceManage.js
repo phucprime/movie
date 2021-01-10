@@ -158,17 +158,17 @@ class MovieResourceManage extends React.Component {
 
         const formData = this.props.form.getFieldsValue();
 
-        const title = formData.title;
-        const score = formData.score;
-        const alias = formData.alias;
-        const releaseDate = formData.releaseDate;
-        const length = formData.length;
-        const director = formData.director;
-        const screenwriter = formData.screenwriter;
-        const cast = formData.cast;
-        const overview = formData.overview;
-        const post = formData.post;
-        const movieType = formData.movieType;
+        const title = formData.titleUpdate;
+        const score = formData.scoreUpdate;
+        const alias = formData.aliasUpdate;
+        const releaseDate = formData.releaseDateUpdate;
+        const length = formData.lengthUpdate;
+        const director = formData.directorUpdate;
+        const screenwriter = formData.screenwriterUpdate;
+        const cast = formData.castUpdate;
+        const overview = formData.overviewUpdate;
+        const post = formData.postUpdate;
+        const movieType = formData.movieTypeUpdate;
 
         fetch(Api.updateMovieInfo(movieType), {
             method: 'POST',
@@ -187,7 +187,8 @@ class MovieResourceManage extends React.Component {
                 screenwriter: screenwriter,
                 cast: cast,
                 overview: overview,
-                post: post
+                post: post,
+                type: movieType
             })
         }).then(response => response.json())
             .then(info => {
@@ -195,16 +196,22 @@ class MovieResourceManage extends React.Component {
                     message.error("Cannot update movie, please check movie information");
                     console.log(`error message: ${info.msg}`);
                 } else {
-                    message.success("Movie updated successfully");
-                    this.setState({post: 'https://icon-library.com/images/poster-icon/poster-icon-0.jpg'});
+                    message.success("Updated successfully");
+                    this.state.itemData.post = post;
+                    this.state.itemData.score = score;
+                    this.state.itemData.alias = alias;
+                    this.state.itemData.releaseDate = releaseDate;
+                    this.state.itemData.length = length;
+                    this.state.itemData.director = director;
+                    this.state.itemData.screenwriter = screenwriter;
+                    this.state.itemData.cast = cast;
+                    this.state.itemData.overview = overview;
                     this.props.form.resetFields();
                 }
                 this.setState({updateLoading: false});
             });
     };
 
-    // nhập url poster xong tự load ảnh và hiển thị ngay để có thể xem trước khi lưu
-    // tại đây url sẽ được lưu thông qua hàm setState() và được kiểm tra hợp lệ với url regex
     onHandleChangePostUrl(e) {
         const {value} = e.target;
         const reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
@@ -213,7 +220,6 @@ class MovieResourceManage extends React.Component {
         }
     };
 
-    // ghi lại các phim đã chọn trong danh sách phim để xóa
     onSelectedMovie(e) {
         const selectedMovies = this.state.selectedMovies;
         const target = e.target;
@@ -354,19 +360,15 @@ class MovieResourceManage extends React.Component {
                 <br/>
                 <br/>
                 <Row>
-                    <Col span={5}/>
-                    <Col span={14}>
+                    <Col span={2}/>
+                    <Col span={20}>
                     { localStorage.permission !== '0' ? 
                         <div id="pad">
                             <Divider orientation="left">
                                 <h2>Movie Manager</h2>
                             </Divider>
-                            <Tabs defaultActiveKey="1">
-                                <TabPane tab={ <span><Icon type="cloud-upload"/>
-                                                    Upload Movie
-                                                </span>
-                                            } 
-                                        key='1'>
+                            <Tabs defaultActiveKey="1" tabPosition='left'>
+                                <TabPane tab={ <span><Icon type="cloud-upload"/>Upload Movie</span>} key='1'>
                                     <div id="info">
                                         <Form onSubmit={this.handleSubmit.bind(this)}>
                                             <FormItem
@@ -546,7 +548,7 @@ class MovieResourceManage extends React.Component {
                                     </div>
                                 </TabPane>
 
-                                <TabPane tab={<span><Icon type="edit"/>Edit Movie</span>} key={increaseKey++}>
+                                <TabPane tab={<span><Icon type="edit"/>Update Movie</span>} key={increaseKey++}>
                                     <Row>
                                             <Col>
                                             <table style={{ textAlign: 'center', width:'100%' }}>
@@ -574,7 +576,7 @@ class MovieResourceManage extends React.Component {
                                                                     <td> {item.alias} </td>
                                                                     <td> {item.cast} </td>
                                                                     <td> {item.director} </td>
-                                                                    <td> {item.length} </td>
+                                                                    <td> {item.length} minutes</td>
                                                                     <td>
                                                                         {item.type.map(
                                                                             type => (
@@ -638,7 +640,7 @@ class MovieResourceManage extends React.Component {
                                                                     initialValue: this.state.itemData.title
                                                                 })(
                                                                     <Input placeholder="Must be same with video file name" 
-                                                                    required={true} className="inputFiled"/>
+                                                                    required={true} className="inputFiled" disabled={true}/>
                                                                 )}
                                                             </FormItem>
                                                             <FormItem
@@ -799,16 +801,8 @@ class MovieResourceManage extends React.Component {
                                     <Spin tip="Deleting movie information, please wait..." 
                                           spinning={this.state.deleteLoading}>
                                         <Row>
-                                            <Col span={2}/>
-                                            <Col span={2}>
-                                                <Button icon="delete" type="danger" ghost
-                                                        onClick={this.onHandleConfirmDeleteTips.bind(this)}
-                                                > 
-                                                        Delete
-                                                </Button>
-                                            </Col>
-                                            <Col span={2}/>
-                                            <Col span={10}>
+                                            <Col span={10}/>
+                                            <Col span={4}>
                                                 {
                                                     (data[0] == null || count == null) 
                                                     ? 
@@ -820,10 +814,10 @@ class MovieResourceManage extends React.Component {
                                                                             <img id='poster_hover' 
                                                                                 src={item.post} alt="post" />
                                                                          }
-                                                                         placement="rightTop"
+                                                                         placement="leftTop"
                                                                 >
                                                                     <Checkbox value={item.title}
-                                                                        onChange={this.onSelectedMovie.bind(this)}
+                                                                        onChange={ this.onSelectedMovie.bind(this) }
                                                                         key={item.title}
                                                                     >
                                                                             {item.title}
@@ -834,11 +828,18 @@ class MovieResourceManage extends React.Component {
                                                         )
                                                 }
                                             </Col>
+                                            <Col>
+                                                <Button icon="delete" type="danger" ghost
+                                                        onClick={this.onHandleConfirmDeleteTips.bind(this)}
+                                                > 
+                                                        Delete
+                                                </Button>
+                                            </Col>
                                         </Row>
                                         <br/>
                                         <br/>
                                         <Row>
-                                            <Col span={6}/>
+                                            <Col span={10}/>
                                             <Col span={10}>
                                                 <Pagination defaultCurrent={1} total={count} defaultPageSize={12}
                                                             onChange={this.onPageChange.bind(this)} />

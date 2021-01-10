@@ -12,7 +12,7 @@ const Api = {
 
     'addMovieInfo': (type) => `${root}/add-movie/${type.join("&")}`,
 
-    'updateMovieInfo': (type) => `${root}/update-movie/${type}`,
+    'updateMovieInfo': (type) => `${root}/update-movie/${type.join("&")}`,
 
     'movieDetail': (title) => `${root}/${title}`,
 

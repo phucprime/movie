@@ -65,6 +65,8 @@ class MovieInfo extends React.Component {
             </Button>
         </div>);
 
+        
+
         return (
             <div>
                 <br/>
@@ -86,7 +88,7 @@ class MovieInfo extends React.Component {
                         <p>Director：{data.director}</p>
                         <p>Alias Name：{data.alias}</p>
                         <p>Release Date：{data.releaseDate}</p>
-                        <p>Type：{data.type}</p>
+                        <p>Type: {data.type + ''}</p>
                         <p>Duration：{data.length} minutes</p>
                         <Popover content={data.cast} title="Actor Information" trigger="hover">
                             <Button type="primary" ghost>

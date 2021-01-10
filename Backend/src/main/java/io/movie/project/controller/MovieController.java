@@ -17,6 +17,7 @@ import io.movie.project.utils.ResultUtil;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -66,20 +67,25 @@ public class MovieController {
         return ResultUtil.success(ResultEnum.ADD_MOVIE);
     }
 
-   	@PostMapping(value = "/update-movie/{type}")
-       public Result updateMovieInfo(@PathVariable("type") String type,
-                              @RequestBody Movie movie) {
-           Movie find = movieRepository.findByTitle(movie.getTitle());
-           if (find == null) {
-               return ResultUtil.error(ResultEnum.MOVIE_NOT_FOUND);
-           }
-           Set<Type> movieType = new HashSet<>();
-           for (String t : type.split("&")) {
-               movieType.add(typeRepository.findByName(t));
-           }
-           movie.setType(movieType);
-           movieRepository.save(movie);
-           return ResultUtil.success(ResultEnum.MOVIE_UPDATED);
+    @PostMapping(value = "/update-movie/{type}")
+    public Result updateMovieInfo(@PathVariable("type") String type,
+                               @RequestBody Movie movie) {
+        Movie find = movieRepository.findByTitle(movie.getTitle());
+        if (find == null) {
+            return ResultUtil.error(ResultEnum.MOVIE_NOT_FOUND);
+        }
+        movieRepository.updateMovie(find.getId(),
+                                    movie.getAlias(),
+                                    movie.getCast(),
+                                    movie.getDirector(),
+                                    movie.getLength(),
+                                    movie.getOverview(),
+                                    movie.getPost(),
+                                    movie.getReleaseDate(),
+                                    movie.getScore(),
+                                    movie.getScreenwriter(),
+                                    movie.getTitle());
+        return ResultUtil.success(ResultEnum.MOVIE_UPDATED);
     }
 
 	@PostMapping(value = "/delete/{title}")
