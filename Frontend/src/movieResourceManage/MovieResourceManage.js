@@ -590,6 +590,7 @@ class MovieResourceManage extends React.Component {
                                                         onCancel={() => this.setIsModalVisible(false)}
                                                         destroyOnClose={true}
                                                         footer={null}
+                                                        width='50%'
                                                 >
                                                         <Form onSubmit={this.handleSubmitUpdate.bind(this)}>
                                                             <FormItem
