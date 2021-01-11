@@ -74,17 +74,18 @@ public class MovieController {
         if (find == null) {
             return ResultUtil.error(ResultEnum.MOVIE_NOT_FOUND);
         }
-        movieRepository.updateMovie(find.getId(),
-                                    movie.getAlias(),
-                                    movie.getCast(),
-                                    movie.getDirector(),
-                                    movie.getLength(),
-                                    movie.getOverview(),
-                                    movie.getPost(),
-                                    movie.getReleaseDate(),
-                                    movie.getScore(),
-                                    movie.getScreenwriter(),
-                                    movie.getTitle());
+        movieRepository.updateMovie(
+                find.getId(),
+                movie.getAlias(),
+                movie.getCast(),
+                movie.getDirector(),
+                movie.getLength(),
+                movie.getOverview(),
+                movie.getPost(),
+                movie.getReleaseDate(),
+                movie.getScore(),
+                movie.getScreenwriter()
+        );
         return ResultUtil.success(ResultEnum.MOVIE_UPDATED);
     }
 

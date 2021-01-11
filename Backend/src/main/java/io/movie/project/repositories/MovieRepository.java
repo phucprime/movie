@@ -23,8 +23,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             "m.post = :post, " +
             "m.releaseDate = :releaseDate, " +
             "m.score = :score, " +
-            "m.screenwriter = :screenwriter, " +
-            "m.title = :title  " +
+            "m.screenwriter = :screenwriter " +
             "WHERE m.id = :id")
 
     void updateMovie(
@@ -37,7 +36,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
              @Param("post") String post,
              @Param("releaseDate") String releaseDate,
              @Param("score") Double score,
-             @Param("screenwriter") String screenwriter,
-             @Param("title") String title
+             @Param("screenwriter") String screenwriter
     );
 }
