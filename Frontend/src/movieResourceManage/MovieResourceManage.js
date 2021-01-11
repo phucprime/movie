@@ -197,15 +197,18 @@ class MovieResourceManage extends React.Component {
                     console.log(`error message: ${info.msg}`);
                 } else {
                     message.success("Updated successfully");
-                    this.state.itemData.post = post;
-                    this.state.itemData.score = score;
-                    this.state.itemData.alias = alias;
-                    this.state.itemData.releaseDate = releaseDate;
-                    this.state.itemData.length = length;
-                    this.state.itemData.director = director;
-                    this.state.itemData.screenwriter = screenwriter;
-                    this.state.itemData.cast = cast;
-                    this.state.itemData.overview = overview;
+                    let dataUp = {
+                        'post' : post,
+                        'score' : score,
+                        'alias' : alias,
+                        'releaseDate' : releaseDate,
+                        'length' : length,
+                        'director' : director,
+                        'screenwriter' : screenwriter,
+                        'cast' : cast,
+                        'overview' : overview
+                    };
+                    this.setState({ itemData: dataUp });
                     this.props.form.resetFields();
                 }
                 this.setState({updateLoading: false});
@@ -615,6 +618,15 @@ class MovieResourceManage extends React.Component {
                                                         <Form onSubmit={this.handleSubmitUpdate.bind(this)}>
                                                             <FormItem
                                                                 {...formItemLayout}
+                                                                label="Movie Name">
+                                                                {getFieldDecorator('titleUpdate', {
+                                                                    initialValue: this.state.itemData.title
+                                                                })(
+                                                                    <Input required={true} className="inputFiled" disabled={true}/>
+                                                                )}
+                                                            </FormItem>
+                                                            <FormItem
+                                                                {...formItemLayout}
                                                                 label="Poster(Url)"
                                                                 extra={
                                                                     <img className="imgExtra" 
@@ -629,18 +641,6 @@ class MovieResourceManage extends React.Component {
                                                                     <Input required={true} 
                                                                         onChange={this.onHandleChangePostUrl.bind(this)}
                                                                         className="inputFiled"/>
-                                                                )}
-                                                            </FormItem>
-                                                            <FormItem
-                                                                {...formItemLayout}
-                                                                label="Movie Name">
-                                                                {getFieldDecorator('titleUpdate', {
-                                                                    rules: [{required: true,
-                                                                    message: 'Please enter the Movie name!'}],
-                                                                    initialValue: this.state.itemData.title
-                                                                })(
-                                                                    <Input placeholder="Must be same with video file name" 
-                                                                    required={true} className="inputFiled" disabled={true}/>
                                                                 )}
                                                             </FormItem>
                                                             <FormItem
