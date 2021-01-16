@@ -8,13 +8,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Movie findByTitle(String title);
+    Movie findAllById(Long id);
 
     @Transactional
     @Modifying
     @Query("update Movie m set " +
+            "m.title = :title, " +
             "m.alias = :alias, " +
             "m.cast = :cast, " +
             "m.director = :director, " +
@@ -28,6 +32,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     void updateMovie(
              @Param("id") Long id,
+             @Param("title") String title,
              @Param("alias") String alias,
              @Param("cast") String cast,
              @Param("director") String director,

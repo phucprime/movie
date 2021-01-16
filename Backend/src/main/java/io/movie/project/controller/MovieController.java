@@ -52,8 +52,7 @@ public class MovieController {
     }
 
 	@PostMapping(value = "/add-movie/{type}")
-    public Result addMovieInfo(@PathVariable("type") String type,
-                           @RequestBody Movie movie) {
+    public Result addMovieInfo(@PathVariable("type") String type, @RequestBody Movie movie) {
         Movie find = movieRepository.findByTitle(movie.getTitle());
         if (find != null) {
             return ResultUtil.error(ResultEnum.MOVIE_DUPLICATE);
@@ -68,14 +67,21 @@ public class MovieController {
     }
 
     @PostMapping(value = "/update-movie/{type}")
-    public Result updateMovieInfo(@PathVariable("type") String type,
-                               @RequestBody Movie movie) {
-        Movie find = movieRepository.findByTitle(movie.getTitle());
+    public Result updateMovieInfo(@PathVariable("type") String type, @RequestBody Movie movie) {
+        Movie find = movieRepository.findAllById(movie.getId());
         if (find == null) {
             return ResultUtil.error(ResultEnum.MOVIE_NOT_FOUND);
         }
+        Set<Type> movieType = new HashSet<>();
+        for (String t : type.split("&")) {
+            movieType.add(typeRepository.findByName(t));
+        }
+        find.setType(movieType);
         movieRepository.updateMovie(
+                //find = movie in db
                 find.getId(),
+                //movie = movie in param
+                movie.getTitle(),
                 movie.getAlias(),
                 movie.getCast(),
                 movie.getDirector(),
