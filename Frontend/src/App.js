@@ -11,11 +11,11 @@ import {
  
 import Header from './header/header';
 import Footer from './footer/footer';
-import Home from './home/Home'
-import MovieInfo from './movieInfo/MovieInfo'
-import MovieCategory from './movieCategory/MovieCategory'
-import MoviePlay from './moviePlay/MoviePlay'
-import MovieResourceManage from './movieResourceManage/MovieResourceManage'
+import Home from './home/Home';
+import MovieInfo from './movieInfo/MovieInfo';
+import MovieCategory from './movieCategory/MovieCategory';
+import MoviePlay from './moviePlay/MoviePlay';
+import MovieResourceManage from './movieResourceManage/MovieResourceManage';
 
 class App extends React.Component {
     render() {

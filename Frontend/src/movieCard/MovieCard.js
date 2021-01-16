@@ -5,13 +5,10 @@ import {
 import {
     Link
 } from 'react-router-dom'
-
 import './MovieCard.css';
 
-// dùng hiển thị phim trên trang chủ thành từng thẻ
 class MovieCard extends React.Component {
     render() {
-        // xử lý score để hiển thị đánh giá dạng hình sao, max = 5 sao
         const half = parseInt(this.props.score, 10) % 2 === 1 ? 0.5 : 0;
         const star = parseInt(this.props.score / 2, 10) + half;
         const desc =

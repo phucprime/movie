@@ -9,7 +9,6 @@ import MovieCard from '../movieCard/MovieCard'
 import './MovieList.css'
 import Api from '../Api'
 
-// phim card hiển thị trên trang chủ
 function ACol(props) {
     return (
         <div>
@@ -21,7 +20,6 @@ function ACol(props) {
     )
 }
 
-// hiển thị danh sách phim dạng card, số lượng mỗi dòng là 4 card
 function Rows(props) {
     let cols = [];
     let incKey=0;

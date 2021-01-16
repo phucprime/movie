@@ -169,6 +169,7 @@ class MovieResourceManage extends React.Component {
         const overview = formData.overviewUpdate;
         const post = formData.postUpdate;
         const movieType = formData.movieTypeUpdate;
+        const id = this.state.itemData.id;
 
         fetch(Api.updateMovieInfo(movieType), {
             method: 'POST',
@@ -188,7 +189,8 @@ class MovieResourceManage extends React.Component {
                 cast: cast,
                 overview: overview,
                 post: post,
-                type: movieType
+                type: movieType,
+                id: id
             })
         }).then(response => response.json())
             .then(info => {
@@ -198,6 +200,7 @@ class MovieResourceManage extends React.Component {
                 } else {
                     message.success("Updated successfully");
                     let dataUp = {
+                        'title': title,
                         'post' : post,
                         'score' : score,
                         'alias' : alias,
@@ -206,7 +209,8 @@ class MovieResourceManage extends React.Component {
                         'director' : director,
                         'screenwriter' : screenwriter,
                         'cast' : cast,
-                        'overview' : overview
+                        'overview' : overview,
+                        'type': movieType
                     };
                     this.setState({ itemData: dataUp });
                     this.props.form.resetFields();
@@ -550,7 +554,6 @@ class MovieResourceManage extends React.Component {
                                         </Form>
                                     </div>
                                 </TabPane>
-
                                 <TabPane tab={<span><Icon type="edit"/>Update Movie</span>} key={increaseKey++}>
                                     <Row>
                                             <Col>
@@ -618,11 +621,17 @@ class MovieResourceManage extends React.Component {
                                                         <Form onSubmit={this.handleSubmitUpdate.bind(this)}>
                                                             <FormItem
                                                                 {...formItemLayout}
-                                                                label="Movie Name">
+                                                                label="Movie Name" 
+                                                                validateStatus="warning"
+                                                                hasFeedback
+                                                                help="Values in this field can't be different from the filename" 
+                                                                >
                                                                 {getFieldDecorator('titleUpdate', {
-                                                                    initialValue: this.state.itemData.title
+                                                                    initialValue: this.state.itemData.title,
+                                                                    rules: [{required: true, 
+                                                                        message: 'Please enter the movie title!'}]
                                                                 })(
-                                                                    <Input required={true} className="inputFiled" disabled={true}/>
+                                                                    <Input required={true} className="inputFiled"/>
                                                                 )}
                                                             </FormItem>
                                                             <FormItem

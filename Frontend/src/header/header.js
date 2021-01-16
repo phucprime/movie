@@ -35,7 +35,6 @@ class Header extends React.Component {
         }
     }
 
-    // lấy username và permission được lưu trữ tạm thời trong local storage khi component được tải
     UNSAFE_componentWillMount() {
         if (localStorage.username !== '') {
             this.setState({
@@ -46,26 +45,22 @@ class Header extends React.Component {
         }
     };
 
-    // thiết lập trạng thái hiển thị cho modal dựa trên value được truyền vào
     setModalVisible(value) {
         this.setState({modalVisible: value});
     };
 
-    // xử lý click trên hai tab trong menu: trang chủ và thể loại phim
     handleMenuClick(e) {
         this.setState({
             current: e.key,
         });
     }
 
-    // hiển thị modal user panel khi click để đăng nhập hoặc đăng ký
     handleButtonClick(e) {
         this.setModalVisible(true);
     }
-    // xử lý đăng nhập
+    
     handleSignIn(e) {
 
-        // bắt đầu gửi dữ liệu
         e.preventDefault();
         this.setState({signInLoading: true});
 
@@ -81,7 +76,6 @@ class Header extends React.Component {
             return;
         }
 
-        // gửi yêu cầu đăng nhập, đăng nhập thành công > reload page
         fetch(Api.userSignIn(username, password, permission), {
             method: 'POST',
             headers: {
@@ -109,10 +103,8 @@ class Header extends React.Component {
             })
     };
 
-    // xử lý đăng ký tài khoản mới
     handleSignUp(e) {
 
-        // bắt đầu gửi dữ liệu
         e.preventDefault();
         this.setState({signUpLoading: true});
 
@@ -135,7 +127,6 @@ class Header extends React.Component {
             return;
         }
 
-        // gửi yêu cầu đăng ký 
         fetch(Api.userSignUp(username, password, permission), {
             method: 'POST',
             headers: {
@@ -162,7 +153,6 @@ class Header extends React.Component {
             });
     }
 
-    // đăng xuất, xóa thông tin người dùng được lưu trong local storage, reload page
     logout() {
         localStorage.username = '';
         localStorage.permission = '0';
@@ -170,13 +160,11 @@ class Header extends React.Component {
         window.location.reload(true);
     };
 
-    // set role của tài khoản khi đăng nhập mà được tick/untick vô checkbox as administrator
     onHandleAdminToggle(e) {
         this.setState({isAdmin: !this.state.isAdmin});
     }
 
     render() {
-        // với role admin sẽ hiển thị 2 option: admin dashboard và register ngược lại kết xuất div rỗng
         const upload = this.state.permission !== "0" 
             ?
             <Menu.Item>
@@ -204,7 +192,6 @@ class Header extends React.Component {
             </Menu>
         );
 
-        // chưa đăng nhập thì hiển thị nút 'log in', đã đăng nhập sẽ hiển thị username
         let {getFieldDecorator} = this.props.form;
         const userShow = this.state.hasLogined
             ?
@@ -239,7 +226,7 @@ class Header extends React.Component {
                                 <Link to={'/'}/><Icon type="home"/>
                                     Home 
                                 </Menu.Item>
-                            <Menu.Item key="app">
+                            <Menu.Item key="category">
                                 <Icon type="profile"/>
                                     Categories
                                 <Link to={'/category'}/>
@@ -253,7 +240,6 @@ class Header extends React.Component {
                     <Col span={3}/>
                 </Row>
 
-                {/** modal form đăng nhập | đăng ký */}
                 <Modal title="User Panel"
                        wrapClassName="vertical-center-modal"
                        visible={this.state.modalVisible}
@@ -263,10 +249,6 @@ class Header extends React.Component {
                        cancelText="Cancel"
                        >
                   <Tabs type="card">
-
-                    {/** xử lý role admin | user sẽ ẩn hiện các phần login | register 
-                       * tùy ngữ cảnh user hoặc admin
-                       */}
                         <TabPane tab="REGISTER" key="2">
                             <Form horizontal="true" onSubmit={this.handleSignUp.bind(this)} className="login-form">
                                     <FormItem label="Username">
@@ -321,7 +303,7 @@ class Header extends React.Component {
                             </Form>
                         </TabPane>
                         { this.state.permission !== "1" // nếu chưa đăng nhập thì chỉ hiển thị form login
-                    ?
+                        ?
                         <TabPane tab="LOGIN" key="1">
                             <Form horizontal="true" onSubmit={this.handleSignIn.bind(this)} className="login-form">
                                     <FormItem label="Username">
@@ -370,4 +352,4 @@ class Header extends React.Component {
         )
     }
 }
-export default Header = Form.create({})(Header);
+export default Form.create({})(Header);
