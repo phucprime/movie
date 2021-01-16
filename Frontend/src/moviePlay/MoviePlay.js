@@ -39,7 +39,7 @@ class MoviePlay extends React.Component {
             .then(req => {
                 setTimeout(hide, 1);
                 if (req.status === 0) {
-                    message.error('Failed! Make sure the title MATCHES with the video filename');
+                    message.error('Make sure that the movie name matches the filename');
                 } else {
                     message.success('Loaded Successfully');
                     this.setState({src: req.data, isLoading: false})

@@ -210,7 +210,8 @@ class MovieResourceManage extends React.Component {
                         'screenwriter' : screenwriter,
                         'cast' : cast,
                         'overview' : overview,
-                        'type': movieType
+                        'type': movieType,
+                        'id': id
                     };
                     this.setState({ itemData: dataUp });
                     this.props.form.resetFields();
@@ -341,7 +342,6 @@ class MovieResourceManage extends React.Component {
                 const formData = new FormData();
                 formData.append("file", fileList[0]);
                 const hide = message.loading('Resource uploading', 0);
-                
                 fetch(Api.uploadMovie(), {
                     method: 'POST',
                     mode: 'cors',
@@ -470,11 +470,12 @@ class MovieResourceManage extends React.Component {
                                                         {required: true, message: 'Please select a Movie Type!'},
                                                     ],
                                                 })(
-                                                    <Select required
-                                                            mode="tags"
+                                                    <Select mode="tags"
                                                             style={{width: '100%'}}
                                                             tokenSeparators={[',']}
-                                                            placeholder="Choose movie type">
+                                                            placeholder="Choose movie type"
+                                                            allowClear={true}
+                                                            autoClearSearchValue={true}>
                                                         <Option value="Plot">Plot</Option>
                                                         <Option value="Comedy">Comedy</Option>
                                                         <Option value="Horror">Horror</Option>
@@ -628,8 +629,7 @@ class MovieResourceManage extends React.Component {
                                                                 >
                                                                 {getFieldDecorator('titleUpdate', {
                                                                     initialValue: this.state.itemData.title,
-                                                                    rules: [{required: true, 
-                                                                        message: 'Please enter the movie title!'}]
+                                                                    rules: [{required: true}]
                                                                 })(
                                                                     <Input required={true} className="inputFiled"/>
                                                                 )}
@@ -738,15 +738,16 @@ class MovieResourceManage extends React.Component {
                                                                 hasFeedback>
                                                                 {getFieldDecorator('movieTypeUpdate', {
                                                                     rules: [
-                                                                        {required: true, message: 'Please select a Movie Type!'},
+                                                                        {required: true, message: 'Please select at least one of types!'},
                                                                     ],
                                                                     initialValue: this.state.itemData.type
                                                                 })(
-                                                                    <Select required
-                                                                            mode="tags"
+                                                                    <Select mode="tags"
                                                                             style={{width: '100%'}}
                                                                             tokenSeparators={[',']}
-                                                                            placeholder="Choose movie type">
+                                                                            placeholder="Choose movie type"
+                                                                            allowClear={true}
+                                                                            autoClearSearchValue={true}>
                                                                         <Option value="Plot">Plot</Option>
                                                                         <Option value="Comedy">Comedy</Option>
                                                                         <Option value="Horror">Horror</Option>

@@ -34,7 +34,13 @@ function Rows(props) {
         cols.push(<ACol movie={props.movies[i]} key={incKey++}/>);
     }
     rows.push(cols.map(c => c));
-    return <div> {rows.map(r => <div key={incKey++}><br />{r}</div>)} </div>;
+    return <div> 
+                { rows.map(r => 
+                            <div key={incKey++}> <br />
+                                {r}
+                            </div>)
+                } 
+            </div>;
 }
 
 class MovieList extends React.Component {
