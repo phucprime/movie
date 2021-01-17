@@ -52,7 +52,7 @@ class MovieCategory extends React.Component {
         let incKey = 0;
 
         if (data == null) {
-            return <div></div>;
+            return <div>No data found, please check your connection to server!</div>;
         }
 
         return (
@@ -79,7 +79,8 @@ class MovieCategory extends React.Component {
                                         <Tag
                                             key={tag}
                                             color={selectedTag === tag ? "#108ee9" : "geekblue"}
-                                            onClick={this.handleClick.bind(this, tag)}> {tag}
+                                            onClick={this.handleClick.bind(this, tag)}> 
+                                                {tag}
                                         </Tag>
                                     </Link>
                                 ))}

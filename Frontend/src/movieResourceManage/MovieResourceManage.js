@@ -25,6 +25,7 @@ import IconTitle from '../iconTitle/IconTitle'
 import './MovieResourceManage.css'
 import Api from '../Api'
 import 'reactjs-popup/dist/index.css'
+import TypesManagement from './TypesManagement'
 
 
 const FormItem = Form.Item;
@@ -40,6 +41,7 @@ class MovieResourceManage extends React.Component {
             post: 'https://icon-library.com/images/poster-icon/poster-icon-0.jpg',
             uploadLoading: false,
             updateLoading: false,
+            reloadLoading: false,
             deleteLoading: false,
             data: [],
             count: 0,
@@ -215,6 +217,7 @@ class MovieResourceManage extends React.Component {
                     };
                     this.setState({ itemData: dataUp });
                     this.props.form.resetFields();
+                    this.fetchData(0);
                 }
                 this.setState({updateLoading: false});
             });
@@ -575,7 +578,16 @@ class MovieResourceManage extends React.Component {
                                                     {
                                                         (data[0] == null || count == null) 
                                                         ? 
-                                                        <tr></tr>
+                                                        <tr>
+                                                            <td colSpan="9">
+                                                                <p>
+                                                                    There is no data. Please check your connection to server and refresh the page.
+                                                                </p>
+                                                                <Button onClick={() => window.location.reload()}>
+                                                                    <Icon type='reload'/>Refresh
+                                                                </Button>
+                                                            </td>
+                                                        </tr>
                                                         :
                                                         data.map(item =>
                                                                 <tr key={item.id}>
@@ -614,10 +626,13 @@ class MovieResourceManage extends React.Component {
                                               <Modal title="Update Movie"
                                                         wrapClassName="vertical-center-modal"
                                                         visible={this.state.modalIsVisible}
-                                                        onCancel={() => this.setIsModalVisible(false)}
+                                                        onCancel={() => {
+                                                            this.setIsModalVisible(false)
+                                                            }
+                                                        }
                                                         destroyOnClose={true}
                                                         footer={null}
-                                                        width='50%'
+                                                        width='45%'
                                                 >
                                                         <Form onSubmit={this.handleSubmitUpdate.bind(this)}>
                                                             <FormItem
@@ -788,7 +803,10 @@ class MovieResourceManage extends React.Component {
                                                             >
                                                                 <Button type="primary" htmlType="submit"
                                                                         icon="edit"
-                                                                        loading={this.state.updateLoading}> Update </Button>
+                                                                        loading={this.state.updateLoading}
+                                                                        > 
+                                                                            Update 
+                                                                </Button>
                                                             </FormItem>
                                                         </Form>
                                                 </Modal>  
@@ -803,9 +821,7 @@ class MovieResourceManage extends React.Component {
                                             </Col>
                                         </Row>
                                 </TabPane>
-
-                                {/* Tab xóa phim */}
-                                <TabPane tab={<span><Icon type="delete"/>Delete Movie</span>} key={increaseKey++}>
+                                <TabPane tab={<span><Icon type="delete"/>Remove Movie</span>} key={increaseKey++}>
                                     <br/>
                                     <br/>
                                     <Spin tip="Deleting movie information, please wait..." 
@@ -858,6 +874,9 @@ class MovieResourceManage extends React.Component {
                                     </Spin>
                                     <br/>
                                     <br/>
+                                </TabPane>
+                                <TabPane tab={<span><Icon type="form"/>Types of Movie</span>} key={increaseKey++}>
+                                        <TypesManagement />
                                 </TabPane>
                             </Tabs>
                         </div>

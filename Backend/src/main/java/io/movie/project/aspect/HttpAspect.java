@@ -16,7 +16,7 @@ public class HttpAspect {
 
     public static final Logger logger = LoggerFactory.getLogger(HttpAspect.class);
 
-    @Pointcut("execution(* io.innofang.jokul.controller.*.*(..))")
+    @Pointcut("execution(* io.movie.project.controller.*.*(..))")
     public void log() { }
 
     @Before("log()")

@@ -2,9 +2,7 @@ package io.movie.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.movie.project.domain.Movie;
 import io.movie.project.domain.Result;
@@ -37,5 +35,15 @@ public class TypeController {
     @GetMapping(value = "/types")
     public Result<List<Type>> getAllTypes() {
         return ResultUtil.success(ResultEnum.GET_TYPES, typeRepository.findAll());
+    }
+
+    @PostMapping(value = "/update-type/{oldType}")
+    public Result updateType(@PathVariable("oldType") String oldType, @RequestBody Type t){
+        Type find = typeRepository.findByName(oldType);
+        if (find == null){
+            return ResultUtil.error(ResultEnum.TYPE_NOT_FOUND);
+        }
+        typeRepository.updateType(find.getName(), t.getName());
+        return ResultUtil.success(ResultEnum.TYPE_UPDATED);
     }
 }
