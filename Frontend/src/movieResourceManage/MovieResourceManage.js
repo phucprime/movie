@@ -314,7 +314,7 @@ class MovieResourceManage extends React.Component {
     render() {
         let increaseKey = 10;
         // data : danh sách phim, dùng cho trang xóa phim
-        //  count : danh sách phim của một trang, dùng để phân trang
+        // count : danh sách phim của một trang, dùng để phân trang
         let {data, count} = this.state;
 
         // chuyển đổi this bên trong thân hàm vì khi gọi không đồng bộ thì nó không phải là this bên ngoài

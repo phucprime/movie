@@ -8,7 +8,8 @@ import {
     Row,
     Modal,
     Input,
-    message
+    message,
+    Popconfirm
 } from 'antd'
 import Api from '../Api'
 
@@ -21,7 +22,12 @@ class TypesManagement extends React.Component{
             data: [],
             itemData: [],
             updateLoading: false,
-            dataUp: []
+            addLoading: false,
+            deleteLoading: false,
+            dataUp: [],
+            loading: false,
+            modalIsVisible: false,
+            modalAddIsVisible: false
         };
     }
     
@@ -43,13 +49,53 @@ class TypesManagement extends React.Component{
         this.setState({modalIsVisible: value});
     };
 
+    setIsModalAddVisible(value) {
+        this.setState({modalAddIsVisible: value});
+    };
+
     setItemData(item) {
         this.setState({itemData: item});
+    }
+
+    handleAddClick(e) {
+        this.setIsModalAddVisible(true);
     }
 
     handleRecordsClick(e) {
         this.setIsModalVisible(true);
     }
+
+    handleAddType(e) {
+        e.preventDefault();
+        this.setState({addLoading: true});
+
+        const formData = this.props.form.getFieldsValue();
+
+        const typeAdd = formData.typeAdd;
+
+        fetch(Api.addType(typeAdd), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            body: JSON.stringify({
+                name: typeAdd
+            })
+        }).then(response => response.json())
+            .then(info => {
+                if (info.status !== 1) {
+                    message.error(`Error: ${info.msg}`);
+                    console.log(`error message: ${info.msg}`);
+                } else {
+                    message.success(`${info.msg}`);
+                    this.props.form.resetFields();
+                    this.componentDidMount();
+                }
+                this.setState({addLoading: false});
+            });
+    };
 
     handleUpdateType(e) {
         e.preventDefault();
@@ -75,15 +121,40 @@ class TypesManagement extends React.Component{
         }).then(response => response.json())
             .then(info => {
                 if (info.status !== 1) {
-                    message.error("Cannot update type, please check more information");
+                    message.error(`Error: ${info.msg}`);
                     console.log(`error message: ${info.msg}`);
                 } else {
-                    message.success("Updated successfully");
+                    message.success(`${info.msg}`);
                     this.setState({ itemData: type });
                     this.props.form.resetFields();
                     this.componentDidMount();
                 }
                 this.setState({updateLoading: false});
+            });
+    };
+
+    handleDeleteType() {
+        this.setState({deleteLoading: true});
+
+        const typeDelete = this.state.itemData;
+
+        fetch(Api.deleteType(typeDelete), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+        }).then(response => response.json())
+            .then(info => {
+                if (info.status !== 1) {
+                    message.error(`Error: ${info.msg}`);
+                    console.log(`error message: ${info.msg}`);
+                } else {
+                    message.success(`${info.msg}`);
+                    this.componentDidMount();
+                }
+                this.setState({deleteLoading: false});
             });
     };
 
@@ -100,13 +171,49 @@ class TypesManagement extends React.Component{
 
         return(
             <Row>
-                <Col span={6}></Col>
+                <Col span={5}/>
                 <Col>
                     <table style={{ textAlign: 'center', width:'50%' }}>
                         <thead>
                         <tr>
-                            <th>Type Name</th>
-                            <th></th>
+                            <th>
+                                Type Name
+                            </th>
+                            <th>
+                                <Button shape='circle' icon='plus' onClick={this.handleAddClick.bind(this)}/>
+                                <Modal title="Add Type"
+                                    wrapClassName="vertical-center-modal"
+                                    centered={true}
+                                    visible={this.state.modalAddIsVisible}
+                                    onCancel={() => this.setIsModalAddVisible(false) }
+                                    destroyOnClose={true}
+                                    footer={null}
+                                    width='25%'
+                                >
+                                    <Form onSubmit={this.handleAddType.bind(this)}>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="Type Name"
+                                            >
+                                            {getFieldDecorator('typeAdd', {
+                                                rules: [{required: true}]
+                                            })(
+                                                <Input required={true} className="inputFiled"/>
+                                            )}
+                                        </FormItem>
+                                        <FormItem
+                                            wrapperCol={{span: 14, offset: 8}}
+                                        >
+                                            <Button type="primary" htmlType="submit"
+                                                    icon="plus"
+                                                    loading={this.state.addLoading}
+                                            > 
+                                                Add Type
+                                            </Button>
+                                        </FormItem>
+                                    </Form>
+                                </Modal>
+                            </th>
                         </tr>
                         </thead>
                         <tbody key={increaseKey++}>
@@ -133,7 +240,7 @@ class TypesManagement extends React.Component{
                                             </td>
                                             <td>
                                                 <Button className="btn btn-dark"
-                                                        style={{ cursor:'pointer' }}
+                                                        style={{ marginRight:20 }}
                                                         icon='form'
                                                         type='primary'
                                                         onClick={
@@ -143,6 +250,17 @@ class TypesManagement extends React.Component{
                                                             }
                                                         }
                                                 />
+                                                <Popconfirm
+                                                    title="Delete permanent?"
+                                                    okText="Yes"
+                                                    cancelText="No"
+                                                    onConfirm={()=> this.handleDeleteType(this)}
+                                                    onVisibleChange={()=> this.setItemData(item)}
+                                                >
+                                                    <Button type='danger'
+                                                            icon='delete'
+                                                    />
+                                                </Popconfirm>
                                             </td>
                                         </tr>
                                     )
@@ -182,8 +300,8 @@ class TypesManagement extends React.Component{
                                 </FormItem>
                             </Form>
                         </Modal>
-                    </Col>    
-            </Row>        
+                    </Col>
+            </Row>      
         )
     }
     

@@ -18,6 +18,10 @@ const Api = {
 
     'types': () => `${root}/types`,
 
+    'addType': (type) => `${root}/add-type/${type}`,
+
+    'deleteType': (type) => `${root}/delete-type/${type}`,
+
     'updateType': (oldType) => `${root}/update-type/${oldType}`,
 
     'typeCount': (type) => `${root}/count/${type}`,
