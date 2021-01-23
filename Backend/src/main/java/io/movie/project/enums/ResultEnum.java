@@ -27,7 +27,8 @@ public enum ResultEnum {
     TYPE_NOT_FOUND(-1, "Type not found"),
     TYPE_DUPLICATED(-1, "Type already existed"),
     TYPE_ADDED(1, "Add type successfully"),
-    TYPE_DELETED(1, "Delete type successfully")
+    TYPE_DELETED(1, "Delete type successfully"),
+    GET_TYPE_LIST(1, "Get type successfully")
     ;
     private Integer status;
     private String msg;

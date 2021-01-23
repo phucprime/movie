@@ -1,7 +1,9 @@
 package io.movie.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import io.movie.project.domain.Movie;
@@ -21,6 +23,18 @@ public class TypeController {
     @Autowired
     private TypeRepository typeRepository;
 
+    @GetMapping(value = "/type-list/{page}")
+    public Result<List<Type>> getTypeList(@PathVariable("page") int page) {
+        Pageable pageable = PageRequest.of(page, 12);
+        Page<Type> types = typeRepository.findAll(pageable);
+        return ResultUtil.success(ResultEnum.GET_TYPE_LIST, types.getContent());
+    }
+
+    @GetMapping(value = "/type-count")
+    public Result<Long> getTypeCount() {
+        return ResultUtil.success(ResultEnum.GET_TYPE_COUNT, typeRepository.count());
+    }
+
     @GetMapping(value = "/{type}/{page}")
     public Result<List<Movie>> getMovieListByType(@PathVariable("type") String type,
                                                 @PathVariable("page") int page) {
@@ -29,7 +43,7 @@ public class TypeController {
     }
 
     @GetMapping(value = "/count/{type}")
-    public Result<Long> getTypeCount(@PathVariable("type") String type) {
+    public Result<Long> getMovieCountOfAType(@PathVariable("type") String type) {
         return ResultUtil.success(ResultEnum.GET_MOVIE_COUNT, typeRepository.countByName(type));
     }
 

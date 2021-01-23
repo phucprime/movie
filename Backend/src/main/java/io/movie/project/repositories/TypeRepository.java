@@ -25,8 +25,4 @@ public interface TypeRepository extends JpaRepository<Type, Long> {
     @Modifying
     @Query("update Type t set t.name = :type WHERE t.name = :oldType")
     void updateType(@Param("oldType") String oldType, @Param("type") String type);
-
-    @Modifying
-    @Query( value = "insert into type (type) values (:type)", nativeQuery = true)
-    void insertType(@Param("type") String type);
 }

@@ -9,7 +9,8 @@ import {
     Modal,
     Input,
     message,
-    Popconfirm
+    Popconfirm,
+    Pagination
 } from 'antd'
 import Api from '../Api'
 
@@ -21,6 +22,7 @@ class TypesManagement extends React.Component{
         this.state = {
             isLoading: false,
             data: [],
+            count: 0,
             itemData: [],
             updateLoading: false,
             addLoading: false,
@@ -34,7 +36,12 @@ class TypesManagement extends React.Component{
     
     componentDidMount() {
         this.setState({isLoading: true});
-        fetch(Api.types(), {
+        this.fetchData(0);
+        this.fetchDataCount();
+    }
+
+    fetchData(page){
+        fetch(Api.typeList(page), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -44,6 +51,24 @@ class TypesManagement extends React.Component{
         }).then(response => response.json())
             .then(info => this.setState({data: info.data, isLoading: false}))
             .catch(error => console.error('Error:', error));
+    }
+
+    fetchDataCount() {
+        fetch(Api.typeQuantities(), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+        }).then(response => response.json())
+            .then(info => this.setState({count: info.data}))
+            .catch(error => console.error('Error:', error));
+    }
+
+    onPageChange(pageNumber) {
+        console.log('Page: ', pageNumber);
+        this.fetchData(pageNumber - 1);
     }
 
     setIsModalVisible(value) {
@@ -160,7 +185,7 @@ class TypesManagement extends React.Component{
     };
 
     render() {
-        const {data} = this.state;
+        const {data, count} = this.state;
         let increaseKey = 10;
 
         const formItemLayout = {
@@ -171,10 +196,11 @@ class TypesManagement extends React.Component{
         const {getFieldDecorator} = this.props.form;
 
         return(
+            <div>
             <Row>
                 <Col span={5}/>
                 <Col>
-                    <table style={{ textAlign: 'center', width:'50%' }}>
+                <table style={{ textAlign: 'center', width:'50%' }}>
                         <thead>
                         <tr>
                             <th>
@@ -237,7 +263,7 @@ class TypesManagement extends React.Component{
                                             <td> 
                                                 <Tag key={item} color='blue'>
                                                     {item}
-                                                </Tag> 
+                                                </Tag>
                                             </td>
                                             <td>
                                                 <Button className="btn btn-dark"
@@ -301,8 +327,16 @@ class TypesManagement extends React.Component{
                                 </FormItem>
                             </Form>
                         </Modal>
-                    </Col>
-            </Row>      
+                    </Col> 
+            </Row>
+            <Row>
+                <Col span={7}/>
+                <Col span={10}>
+                    <Pagination defaultCurrent={1} total={count} defaultPageSize={12}
+                                onChange={this.onPageChange.bind(this)} />
+                </Col>
+            </Row>
+            </div>
         )
     }
     

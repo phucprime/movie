@@ -820,29 +820,31 @@ class MovieResourceManage extends React.Component {
                                         <Row>
                                             <Col span={10}/>
                                             <Col span={4}>
+                                                <Checkbox.Group>
                                                 {
                                                     (data[0] == null || count == null) 
                                                     ? 
-                                                    <div></div>
+                                                        <div></div>
                                                     :
                                                     data.map(item =>
-                                                            <div id="movieItem" key={increaseKey++}>
-                                                                <Popover content={
-                                                                            <img id='poster_hover' 
-                                                                                src={item.post} alt="post" />
-                                                                         }
-                                                                         placement="leftTop"
+                                                        <div id="movieItem" key={increaseKey++}>
+                                                            <Popover content={
+                                                                        <img id='poster_hover' 
+                                                                            src={item.post} alt="post" />
+                                                                        }
+                                                                    placement="leftTop"
+                                                            >
+                                                                <Checkbox value={item.title} key={item.title}
+                                                                    onChange={this.onSelectedMovie.bind(this)}
                                                                 >
-                                                                    <Checkbox value={item.title} key={item.title}
-                                                                        onChange={this.onSelectedMovie.bind(this)}
-                                                                    >
-                                                                            {item.title}
-                                                                    </Checkbox>
-                                                                    <br/><br/>
-                                                                    </Popover>
-                                                                </div>
-                                                        )
+                                                                        {item.title}
+                                                                </Checkbox>
+                                                                <br/><br/>
+                                                            </Popover>
+                                                        </div>
+                                                    )
                                                 }
+                                                </Checkbox.Group>
                                             </Col>
                                             <Col>
                                                 <Button icon="delete" type="danger" ghost

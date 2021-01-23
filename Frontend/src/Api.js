@@ -4,7 +4,11 @@ const Api = {
 
     'movieList': (page) => `${root}/movie-list/${page}`,
 
+    'typeList': (page) => `${root}/type-list/${page}`,
+
     'movieCount': () => `${root}/movie-count`,
+
+    'typeQuantities': () => `${root}/type-count`,
 
     'deleteMovies': (movies) => `${root}/delete-more/${movies.join("&")}`,
 
