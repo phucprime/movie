@@ -43,7 +43,7 @@ public class TypeController {
     }
 
     @GetMapping(value = "/count/{type}")
-    public Result<Long> getMovieCountOfAType(@PathVariable("type") String type) {
+    public Result<Long> getMovieByType(@PathVariable("type") String type) {
         return ResultUtil.success(ResultEnum.GET_MOVIE_COUNT, typeRepository.countByName(type));
     }
 
