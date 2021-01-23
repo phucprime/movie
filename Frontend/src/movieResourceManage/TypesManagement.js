@@ -328,14 +328,14 @@ class TypesManagement extends React.Component{
                             </Form>
                         </Modal>
                     </Col> 
-            </Row>
+            </Row><br />
             <Row>
-                <Col span={7}/>
+                <Col span={9}/>
                 <Col span={10}>
                     <Pagination defaultCurrent={1} total={count} defaultPageSize={12}
                                 onChange={this.onPageChange.bind(this)} />
                 </Col>
-            </Row>
+            </Row><br />
             </div>
         )
     }

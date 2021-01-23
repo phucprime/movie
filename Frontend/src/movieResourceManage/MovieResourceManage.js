@@ -243,7 +243,12 @@ class MovieResourceManage extends React.Component {
         const {value} = e.target;
         const reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
         if ((reg.test(value))) {
-            this.setState({post: value});
+            this.setState(prevState => {
+                    let itemData = Object.assign({}, prevState.itemData);  // creating copy of state
+                    itemData.post = value;                                 // update the post property, assign a new value                 
+                    return { itemData };                                   // return new object itemData object
+                }
+            )
         }
     };
 
