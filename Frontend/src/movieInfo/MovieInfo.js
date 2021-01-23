@@ -20,7 +20,6 @@ class MovieInfo extends React.Component {
         }
     }
 
-    // khi component được tải, request thông tin của phim
     componentDidMount() {
         this.setState({isLoading: true});
 
@@ -65,8 +64,6 @@ class MovieInfo extends React.Component {
             </Button>
         </div>);
 
-        
-
         return (
             <div>
                 <br/>
@@ -101,21 +98,21 @@ class MovieInfo extends React.Component {
                         <h1>Overview and Trailer</h1>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;{data.overview}</p>
                         {/* embedded url insert here */}
-                        {
-                            validURL(data.screenwriter) 
+                        {validURL(data.screenwriter) 
                             ?
-                                <iframe playsInline
-                                        src={`${data.screenwriter}`} 
-                                        width="100%" 
-                                        height="auto" 
-                                        frameBorder="0" 
-                                        allow="autoplay; fullscreen" 
-                                        allowFullScreen
-                                        title="Film's Trailer"
-                                        >
-                                </iframe>
+                            <iframe playsInline
+                                    src={`${data.screenwriter}`} 
+                                    width="100%" 
+                                    height="auto" 
+                                    frameBorder="0" 
+                                    allowFullScreen
+                                    title="Film's Trailer"
+                                    >
+                            </iframe>
                             :
-                                <p style={{ color: 'red' }}>No trailer available.</p>
+                            <p style={{ color: 'red' }}>
+                                No trailer available.
+                            </p>
                         }
                     </Col>
                     <Col span={4}/>

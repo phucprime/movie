@@ -30,6 +30,7 @@ import TypesManagement from './TypesManagement'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+const OptGroup = Select.OptGroup;
 const {TextArea} = Input;
 const TabPane = Tabs.TabPane;
 const Dragger = Upload.Dragger;
@@ -48,11 +49,13 @@ class MovieResourceManage extends React.Component {
             selectedMovies: [],
             fileList: [],
             modalIsVisible: false,
-            itemData: []
+            itemData: [],
+            typeData: []
         };
     }
 
     componentDidMount() {
+        this.fetchTypeData();
         this.fetchDataCount();
         this.fetchData(0);
     }
@@ -88,6 +91,19 @@ class MovieResourceManage extends React.Component {
             mode: 'cors',
         }).then(response => response.json())
             .then(info => this.setState({data: info.data}))
+            .catch(error => console.error('Error:', error));
+    }
+
+    fetchTypeData(){
+        fetch(Api.types(), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+        }).then(response => response.json())
+            .then(info => this.setState({typeData: info.data}))
             .catch(error => console.error('Error:', error));
     }
 
@@ -247,7 +263,6 @@ class MovieResourceManage extends React.Component {
         this.setState({selectedMovies});
     }
 
-    // confirmation prompt xóa phim
     onHandleConfirmDeleteTips() {
         const key = `open${Date.now()}`;
         if (this.state.selectedMovies.length === 0) {
@@ -313,9 +328,10 @@ class MovieResourceManage extends React.Component {
 
     render() {
         let increaseKey = 10;
-        // data : danh sách phim, dùng cho trang xóa phim
-        // count : danh sách phim của một trang, dùng để phân trang
-        let {data, count} = this.state;
+        // data: dữ liệu phim
+        // count: danh sách phim của một trang, dùng để phân trang
+        // typeData: dữ liệu thể loại phim
+        let {data, count, typeData} = this.state;
 
         // chuyển đổi this bên trong thân hàm vì khi gọi không đồng bộ thì nó không phải là this bên ngoài
         const that = this;
@@ -327,7 +343,6 @@ class MovieResourceManage extends React.Component {
             wrapperCol: {span: 14},
         };
 
-        // thuộc tính upload phim
         const uploadProps = {
             accept: "video／*",
             name: 'file',   
@@ -377,7 +392,7 @@ class MovieResourceManage extends React.Component {
                             <Divider orientation="left">
                                 <h2>Movie Manager</h2>
                             </Divider>
-                            <Tabs defaultActiveKey="1" tabPosition='left'>
+                            <Tabs defaultActiveKey="1" tabPosition='left' onTabClick={() => this.fetchTypeData()}>
                                 <TabPane tab={ <span><Icon type="cloud-upload"/>Upload Movie</span>} key='1'>
                                     <div id="info">
                                         <Form onSubmit={this.handleSubmit.bind(this)}>
@@ -479,27 +494,15 @@ class MovieResourceManage extends React.Component {
                                                             placeholder="Choose movie type"
                                                             allowClear={true}
                                                             autoClearSearchValue={true}>
-                                                        <Option value="Plot">Plot</Option>
-                                                        <Option value="Comedy">Comedy</Option>
-                                                        <Option value="Horror">Horror</Option>
-                                                        <Option value="Action">Action</Option>
-                                                        <Option value="Love">Love</Option>
-                                                        <Option value="Crime">Crime</Option>
-                                                        <Option value="Terror">Terror</Option>
-                                                        <Option value="Adventure">Adventure</Option>
-                                                        <Option value="Suspense">Suspense</Option>
-                                                        <Option value="Science">Science</Option>
-                                                        <Option value="Family">Family</Option>
-                                                        <Option value="Fantastic">Fantastic</Option>
-                                                        <Option value="Animation">Animation</Option>
-                                                        <Option value="War">War</Option>
-                                                        <Option value="History">History</Option>
-                                                        <Option value="Biography">Biography</Option>
-                                                        <Option value="Music">Music</Option>
-                                                        <Option value="Sing and dance">Sing and dance</Option>
-                                                        <Option value="Sport">Sport</Option>
-                                                        <Option value="Westerm">Westerm</Option>
-                                                        <Option value="Documentary">Documentary</Option>
+                                                        <OptGroup key={increaseKey++} label="Movie types">
+                                                        {
+                                                            typeData.map((typeData) =>
+                                                                <Option key={increaseKey++}>
+                                                                    {typeData}
+                                                                </Option>
+                                                            )
+                                                        }
+                                                        </OptGroup>
                                                     </Select>
                                                 )}
                                             </FormItem>
@@ -763,27 +766,15 @@ class MovieResourceManage extends React.Component {
                                                                             placeholder="Choose movie type"
                                                                             allowClear={true}
                                                                             autoClearSearchValue={true}>
-                                                                        <Option value="Plot">Plot</Option>
-                                                                        <Option value="Comedy">Comedy</Option>
-                                                                        <Option value="Horror">Horror</Option>
-                                                                        <Option value="Action">Action</Option>
-                                                                        <Option value="Love">Love</Option>
-                                                                        <Option value="Crime">Crime</Option>
-                                                                        <Option value="Terror">Terror</Option>
-                                                                        <Option value="Adventure">Adventure</Option>
-                                                                        <Option value="Suspense">Suspense</Option>
-                                                                        <Option value="Science">Science</Option>
-                                                                        <Option value="Family">Family</Option>
-                                                                        <Option value="Fantastic">Fantastic</Option>
-                                                                        <Option value="Animation">Animation</Option>
-                                                                        <Option value="War">War</Option>
-                                                                        <Option value="History">History</Option>
-                                                                        <Option value="Biography">Biography</Option>
-                                                                        <Option value="Music">Music</Option>
-                                                                        <Option value="Sing and dance">Sing and dance</Option>
-                                                                        <Option value="Sport">Sport</Option>
-                                                                        <Option value="Westerm">Westerm</Option>
-                                                                        <Option value="Documentary">Documentary</Option>
+                                                                        <OptGroup key={increaseKey++} label="Movie types">
+                                                                        {
+                                                                            typeData.map((typeData) =>
+                                                                                <Option key={increaseKey++}>
+                                                                                    {typeData}
+                                                                                </Option>
+                                                                            )
+                                                                        }
+                                                                        </OptGroup>
                                                                     </Select>
                                                                 )}
                                                             </FormItem>
@@ -842,9 +833,8 @@ class MovieResourceManage extends React.Component {
                                                                          }
                                                                          placement="leftTop"
                                                                 >
-                                                                    <Checkbox value={item.title}
-                                                                        onChange={ this.onSelectedMovie.bind(this) }
-                                                                        key={item.title}
+                                                                    <Checkbox value={item.title} key={item.title}
+                                                                        onChange={this.onSelectedMovie.bind(this)}
                                                                     >
                                                                             {item.title}
                                                                     </Checkbox>

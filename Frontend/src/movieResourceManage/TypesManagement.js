@@ -19,6 +19,7 @@ class TypesManagement extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: false,
             data: [],
             itemData: [],
             updateLoading: false,
