@@ -3,7 +3,8 @@ import {
     Col,
     Row,
     Button,
-    Popover
+    Popover,
+    Tag
 } from 'antd';
 
 import { Link } from 'react-router-dom'
@@ -15,14 +16,13 @@ class MovieInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: {},
+            data: [],
             isLoading: false
         }
     }
 
     componentDidMount() {
         this.setState({isLoading: true});
-
         fetch(Api.movieDetail(this.props.match.params.title), {
             method: 'GET',
             headers: {
@@ -37,6 +37,7 @@ class MovieInfo extends React.Component {
 
     render() {
         const {data} = this.state;
+        const type = [data.type];
         if (data == null) {
             return <div></div>;
         }
@@ -85,7 +86,7 @@ class MovieInfo extends React.Component {
                         <p>Director：{data.director}</p>
                         <p>Alias Name：{data.alias}</p>
                         <p>Release Date：{data.releaseDate}</p>
-                        <p>Type: {data.type + ''}</p>
+                        <p>Type: {type.map(type => <Tag>{type+''}</Tag>)}</p>
                         <p>Duration：{data.length} minutes</p>
                         <Popover content={data.cast} title="Actor Information" trigger="hover">
                             <Button type="primary" ghost>
@@ -98,7 +99,7 @@ class MovieInfo extends React.Component {
                         <h1>Overview and Trailer</h1>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;{data.overview}</p>
                         {/* embedded url insert here */}
-                        {validURL(data.screenwriter) 
+                        {validURL(data.screenwriter)
                             ?
                             <iframe playsInline
                                     src={`${data.screenwriter}`} 

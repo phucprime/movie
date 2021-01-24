@@ -62,7 +62,8 @@ public class Movie {
         this.post = post;
     }
 
-    public Movie(String title, Double score, String alias, String releaseDate, Integer length, String director, String screenwriter, String cast, String overview, String post, Set<Type> type) {
+    public Movie(String title, Double score, String alias, String releaseDate, Integer length, String director,
+                 String screenwriter, String cast, String overview, String post, Set<Type> type) {
         this.title = title;
         this.score = score;
         this.alias = alias;

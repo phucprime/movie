@@ -239,7 +239,15 @@ class MovieResourceManage extends React.Component {
             });
     };
 
-    onHandleChangePostUrl(e) {
+    onHandleChangePostAddUrl(e) {
+        const {value} = e.target;
+        const reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
+        if ((reg.test(value))) {
+            this.setState({post: value})
+        }
+    };
+
+    onHandleChangePostUpdateUrl(e) {
         const {value} = e.target;
         const reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
         if ((reg.test(value))) {
@@ -502,7 +510,9 @@ class MovieResourceManage extends React.Component {
                                                         <OptGroup key={increaseKey++} label="Movie types">
                                                         {
                                                             typeData.map((typeData) =>
-                                                                <Option key={increaseKey++}>
+                                                                <Option key={increaseKey++}
+                                                                        value={typeData}
+                                                                >
                                                                     {typeData}
                                                                 </Option>
                                                             )
@@ -526,7 +536,7 @@ class MovieResourceManage extends React.Component {
                                                 label="Poster(Url)"
                                                 extra={
                                                     <img className="imgExtra" 
-                                                    src={this.state.post} alt="post" />
+                                                    src={this.state.post} alt="Post not found" />
                                                 }
                                                 >
                                                 {getFieldDecorator('post', {
@@ -534,7 +544,7 @@ class MovieResourceManage extends React.Component {
                                                              message: 'Please enter the poster URL!'}],
                                                 })(
                                                     <Input required={true} 
-                                                           onChange={this.onHandleChangePostUrl.bind(this)}
+                                                           onChange={this.onHandleChangePostAddUrl.bind(this)}
                                                            className="inputFiled"/>
                                                 )}
                                             </FormItem>
@@ -662,7 +672,7 @@ class MovieResourceManage extends React.Component {
                                                                 label="Poster(Url)"
                                                                 extra={
                                                                     <img className="imgExtra" 
-                                                                    src={this.state.itemData.post} alt="post" />
+                                                                    src={this.state.itemData.post} alt="Post not found" />
                                                                 }
                                                                 >
                                                                 {getFieldDecorator('postUpdate', {
@@ -671,7 +681,7 @@ class MovieResourceManage extends React.Component {
                                                                             initialValue: this.state.itemData.post
                                                                 })(
                                                                     <Input required={true} 
-                                                                        onChange={this.onHandleChangePostUrl.bind(this)}
+                                                                        onChange={this.onHandleChangePostUpdateUrl.bind(this)}
                                                                         className="inputFiled"/>
                                                                 )}
                                                             </FormItem>
@@ -774,7 +784,9 @@ class MovieResourceManage extends React.Component {
                                                                         <OptGroup key={increaseKey++} label="Movie types">
                                                                         {
                                                                             typeData.map((typeData) =>
-                                                                                <Option key={increaseKey++}>
+                                                                                <Option key={increaseKey++}
+                                                                                        value={typeData}
+                                                                                >
                                                                                     {typeData}
                                                                                 </Option>
                                                                             )

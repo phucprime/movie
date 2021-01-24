@@ -66,7 +66,7 @@ class TypesManagement extends React.Component{
             .catch(error => console.error('Error:', error));
     }
 
-    onPageChange(pageNumber) {
+    onTypePageChange(pageNumber) {
         console.log('Page: ', pageNumber);
         this.fetchData(pageNumber - 1);
     }
@@ -332,13 +332,15 @@ class TypesManagement extends React.Component{
             <Row>
                 <Col span={9}/>
                 <Col span={10}>
-                    <Pagination defaultCurrent={1} total={count} defaultPageSize={12}
-                                onChange={this.onPageChange.bind(this)} />
+                    <Pagination defaultCurrent={1} 
+                                total={count} 
+                                defaultPageSize={12}
+                                onChange={this.onTypePageChange.bind(this)} 
+                    />
                 </Col>
             </Row><br />
             </div>
         )
     }
-    
 }
 export default TypesManagement = Form.create({})(TypesManagement);

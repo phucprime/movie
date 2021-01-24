@@ -10,7 +10,7 @@ import {
     Player,
     LoadingSpinner,
     BigPlayButton
-} from 'video-react';
+} from 'video-react'
 
 import './MoviePlay.css'
 import Api from '../Api'
