@@ -53,9 +53,11 @@ public class MovieUploadController {
 
     @PostMapping("/play/{movie}")
     public Result<String> uploadMovieFile(@PathVariable("movie") String movie) {
-        if (storageService.loadAll()
-                .noneMatch(path -> path.getFileName().toString().contains(movie))) {
+        if (storageService.loadAll().noneMatch(path -> path.getFileName().toString().contains(movie))) {
             File file = storageProperties.getSourceFile(movie);
+            if(!file.isFile()){
+                return ResultUtil.error(ResultEnum.LOAD_RESOURCE_FAILED);
+            }
             storageService.store(file);
         }
         return ResultUtil.success(ResultEnum.UPLOAD_MOVIE_FILE,

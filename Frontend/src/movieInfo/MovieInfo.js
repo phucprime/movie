@@ -43,12 +43,12 @@ class MovieInfo extends React.Component {
         }
 
         function validURL(strData) {
-            var regex = new RegExp('^(https?:\\/\\/)?'+
-              '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain
-              '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip v4 address
-              '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port & path
-              '(\\?[;&a-z\\d%_.~+=-]*)?'+ // string query
-              '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+            var regex = new RegExp('^(https?:\\/\\/)?' +
+              '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +  // domain
+              '((\\d{1,3}\\.){3}\\d{1,3}))' +                       // OR ip v4 address
+              '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +                   // port & path
+              '(\\?[;&a-z\\d%_.~+=-]*)?' +                          // string query
+              '(\\#[-a-z\\d_]*)?$','i' );                           // fragment locator
             return !!regex.test(strData);
         }
         
@@ -86,7 +86,7 @@ class MovieInfo extends React.Component {
                         <p>Director：{data.director}</p>
                         <p>Alias Name：{data.alias}</p>
                         <p>Release Date：{data.releaseDate}</p>
-                        <p>Type: {type.map(type => <Tag>{type+''}</Tag>)}</p>
+                        <p>Type: {type.map(type => <Tag>{type + ''}</Tag>)}</p>
                         <p>Duration：{data.length} minutes</p>
                         <Popover content={data.cast} title="Actor Information" trigger="hover">
                             <Button type="primary" ghost>
