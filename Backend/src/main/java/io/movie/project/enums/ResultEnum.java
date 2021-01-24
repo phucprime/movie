@@ -29,7 +29,7 @@ public enum ResultEnum {
     TYPE_ADDED(1, "Add type successfully"),
     TYPE_DELETED(1, "Delete type successfully"),
     GET_TYPE_LIST(1, "Get type successfully"),
-    LOAD_RESOURCE_FAILED(0, "Failed to load resource")
+    LOAD_RESOURCE_FAILED(0, "Resource not found")
     ;
     private Integer status;
     private String msg;
