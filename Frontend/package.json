@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.9",
+    "cors": "^2.8.5",
     "devextreme-react": "^20.2.4",
     "json-loader": "^0.5.7",
     "react": "^16.14.0",

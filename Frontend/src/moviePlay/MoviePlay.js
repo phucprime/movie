@@ -11,7 +11,6 @@ import {
     LoadingSpinner,
     BigPlayButton
 } from 'video-react'
-
 import './MoviePlay.css'
 import Api from '../Api'
 
@@ -31,8 +30,9 @@ class MoviePlay extends React.Component {
         fetch(Api.playMovie(this.props.match.params.movie), {
             method: 'POST',
             headers: {
+                'X-Content-Type-Options': 'nosniff',
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
             mode: 'cors',
         }).then(response => response.json())
@@ -80,8 +80,8 @@ class MoviePlay extends React.Component {
                 <Row>
                     <Col span={4}/>
                     <Col span={15}>
-                    <Player playsInline src={src}>
-                        <LoadingSpinner />
+                    <Player src={src}>
+                       <LoadingSpinner />
                         <BigPlayButton position="center"/>
                     </Player>
                     </Col>

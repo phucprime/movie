@@ -193,6 +193,7 @@ class Header extends React.Component {
         );
 
         let {getFieldDecorator} = this.props.form;
+
         const userShow = this.state.hasLogined
             ?
             <Dropdown overlay={menu} placement="topCenter">
@@ -243,11 +244,9 @@ class Header extends React.Component {
                 <Modal title="User Panel"
                        wrapClassName="vertical-center-modal"
                        visible={this.state.modalVisible}
-                       onOk={() => this.setModalVisible(true)}
                        onCancel={() => this.setModalVisible(false)}
-                       okText="OK"
-                       cancelText="Cancel"
-                       >
+                       footer={false}
+                >
                   <Tabs type="card">
                         <TabPane tab="REGISTER" key="2">
                             <Form horizontal="true" onSubmit={this.handleSignUp.bind(this)} className="login-form">
@@ -280,7 +279,8 @@ class Header extends React.Component {
                                                 type="password" placeholder="confirm password"/>
                                         )}
                                     </FormItem>
-                                    { this.state.permission !== "0" // nếu login acc admin thì ẩn tuỳ chọn đăng ký như administrator
+                                    { this.state.permission !== "0" 
+                                    // nếu login acc admin thì ẩn tuỳ chọn đăng ký như administrator
                                     ?
                                     <FormItem>
                                         {getFieldDecorator('r_permission', {
@@ -302,7 +302,8 @@ class Header extends React.Component {
                                     </Button>
                             </Form>
                         </TabPane>
-                        { this.state.permission !== "1" // nếu chưa đăng nhập thì chỉ hiển thị form login
+                        { this.state.permission !== "1" 
+                        // nếu chưa đăng nhập thì chỉ hiển thị form login
                         ?
                         <TabPane tab="LOGIN" key="1">
                             <Form horizontal="true" onSubmit={this.handleSignIn.bind(this)} className="login-form">
