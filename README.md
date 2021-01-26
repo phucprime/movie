@@ -1,10 +1,10 @@
 ## React JS (Antd Design) + Java Spring Boot
 ##
-***1. Home page***
+***1. Home page & main feature***
 ##
 ![](gif-demo/movie1.gif)
 ##
-***2. Categories list***
+***2. Categories***
 ##
 ![](gif-demo/movie2.gif)
 ##
