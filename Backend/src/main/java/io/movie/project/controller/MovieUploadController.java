@@ -61,7 +61,7 @@ public class MovieUploadController {
             }
             storageService.store(file);
         }
-        return ResultUtil.success(ResultEnum.UPLOAD_MOVIE_FILE,
+        return ResultUtil.success(ResultEnum.LOAD_RESOURCE_OK,
                 MvcUriComponentsBuilder.fromMethodName(
                         MovieUploadController.class, "serveMovie", movie)
                         .build().toString() + ".mp4");
