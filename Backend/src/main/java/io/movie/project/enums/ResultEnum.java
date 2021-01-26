@@ -9,7 +9,7 @@ public enum ResultEnum {
     GET_MOVIE_SRC_LIST(1, "Get movie source list successfully"),
     GET_MOVIE_DETAIL(1, "Get movie detail successfully"),
     GET_TYPES(1, "Get types successfully"),
-    UPLOAD_MOVIE_FILE(1, "Load movie file successfully"),
+    UPLOAD_MOVIE_FILE(1, "Upload movie file successfully"),
     ADD_MOVIE(1, "Add movie successfully"),
     DELETE_MOVIE(1, "Delete movie successfully"),
     DELETE_MORE_MOVIES(1, "Delete more movies successfully"),

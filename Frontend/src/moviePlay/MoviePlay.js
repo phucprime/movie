@@ -23,6 +23,7 @@ class MoviePlay extends React.Component {
             text: 'Click to download the movie'
         }
     }
+    
 
     componentDidMount() {
         this.setState({isLoading: true});

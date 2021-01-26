@@ -19,7 +19,8 @@ import {
     notification,
     Spin,
     Modal,
-    Tag
+    Tag,
+    Popconfirm
 } from 'antd';
 import IconTitle from '../iconTitle/IconTitle'
 import './MovieResourceManage.css'
@@ -50,7 +51,7 @@ class MovieResourceManage extends React.Component {
             fileList: [],
             modalIsVisible: false,
             itemData: [],
-            typeData: []
+            typeData: [],
         };
     }
 
@@ -79,8 +80,7 @@ class MovieResourceManage extends React.Component {
             .then(info => this.setState({count: info.data}))
             .catch(error => console.error('Error:', error));
     }
-
-    // khi duyệt qua các trang, lấy danh sách phim trên trang hiện tại
+    
     fetchData(page) {
         fetch(Api.movieList(page), {
             method: 'GET',
@@ -276,6 +276,24 @@ class MovieResourceManage extends React.Component {
         this.setState({selectedMovies});
     }
 
+    onFileChange = info => {
+            let fileList = [...info.fileList];
+
+            // 1. Limit the number of uploaded files
+            // Only to show two recent uploaded files, and old ones will be replaced by the new
+            fileList = fileList.slice(-2);
+        
+            // 2. Read from response and show file link
+            fileList = fileList.map(file => {
+            if (file.response) {
+                // Component will show file.url as link
+                file.url = file.response.url;
+            }
+            return file;
+            });
+            this.setState({ fileList });
+        };
+
     onHandleConfirmDeleteTips() {
         const key = `open${Date.now()}`;
         if (this.state.selectedMovies.length === 0) {
@@ -341,33 +359,31 @@ class MovieResourceManage extends React.Component {
 
     render() {
         let increaseKey = 10;
-        // data: dữ liệu phim
-        // count: danh sách phim của một trang, dùng để phân trang
-        // typeData: dữ liệu thể loại phim
+        // count: count movies for pagination
         let {data, count, typeData} = this.state;
 
         // chuyển đổi this bên trong thân hàm vì khi gọi không đồng bộ thì nó không phải là this bên ngoài
         const that = this;
         const {getFieldDecorator} = this.props.form;
 
-        // layout cho các input items
+        // input layout
         const formItemLayout = {
             labelCol: {span: 6},
             wrapperCol: {span: 14},
         };
 
         const uploadProps = {
-            accept: "video／*",
+            accept: 'video/*',
             name: 'file',   
             listType: 'text',
             action: Api.uploadMovie(),
+            onChange: this.onFileChange,
             beforeUpload(file, fileList) {
                 that.setState(({fileList}) => ({
                     fileList: [...fileList, file],
                 }));
                 that.setState({fileList});
             },
-            fileList: this.state.fileList,
             customRequest() {
                 const {fileList} = that.state;
                 const formData = new FormData();
@@ -382,13 +398,13 @@ class MovieResourceManage extends React.Component {
                     .then(info => {
                         setTimeout(hide, 1);
                         if (info.status !== 1) {
-                            message.error("Upload Failed!");
+                            message.error(`${info.msg}`);
                             console.log(`error message: ${info.msg}`);
                         } else {
-                            message.success("Uploaded Successfully!");
+                            message.success(`${info.msg}`);
                         }
                     })
-                    .catch(error => console.error('Error:', error));
+                    .catch(error => console.error('Error: ', error));
             },
         };
 
@@ -553,7 +569,7 @@ class MovieResourceManage extends React.Component {
                                                 label="Upload Media"
                                             >
                                                 {getFieldDecorator('upload')(
-                                                    <Dragger {...uploadProps}>
+                                                    <Dragger {...uploadProps} fileList={this.state.fileList}>
                                                         <p className="ant-upload-drag-icon">
                                                             <Icon type="inbox"/>
                                                         </p>
@@ -805,6 +821,26 @@ class MovieResourceManage extends React.Component {
                                                                 })(
                                                                     <TextArea required={true} className="inputFiled" rows={5}/>
                                                                 )}
+                                                            </FormItem>
+                                                            <FormItem wrapperCol={{span: 12, offset: 6}}>
+                                                                <Upload>
+                                                                    <Button icon='upload'>
+                                                                        Upload new file
+                                                                    </Button>
+                                                                </Upload>
+                                                                <span style={{ backgroundColor: 'lightblue' }}>
+                                                                    <Icon type='link' /> {this.state.itemData.title} 
+                                                                    <Popconfirm
+                                                                        title='Are you sure?'
+                                                                        okText='Yes'
+                                                                        cancelText='No'
+                                                                    >
+                                                                        <Icon style={{ position: 'relative', right:'-5%', 
+                                                                                        color:'red', cursor:'pointer' }} 
+                                                                            type='delete' 
+                                                                        />
+                                                                    </Popconfirm>
+                                                                </span>
                                                             </FormItem>
                                                             <FormItem
                                                                 wrapperCol={{span: 12, offset: 6}}

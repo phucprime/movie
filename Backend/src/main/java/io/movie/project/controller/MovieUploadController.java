@@ -52,7 +52,7 @@ public class MovieUploadController {
     }
 
     @PostMapping("/play/{movie}")
-    public Result<String> uploadMovieFile(@PathVariable("movie") String movie) {
+    public Result<String> playMovie(@PathVariable("movie") String movie) {
         if (storageService.loadAll()
                 .noneMatch(path -> path.getFileName().toString().contains(movie))) {
             File file = storageProperties.getSourceFile(movie);
