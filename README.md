@@ -1,23 +1,31 @@
-## Movie Web Application
+## React JS (Antd Design) + Java Spring Boot
 ##
-***Demo 1***
+***1. Home page & main feature***
 ##
 ![](gif-demo/movie1.gif)
 ##
-***Demo 2***
+***2. Categories***
 ##
 ![](gif-demo/movie2.gif)
 ##
-***Demo 3***
+***3. Authentication***
 ##
 ![](gif-demo/movie3.gif)
 ##
-***Demo 4***
+***4. Add new movies***
 ##
 ![](gif-demo/movie4.gif)
 ##
-***Demo5***
+***5. Update movie information***
 ##
 ![](gif-demo/movie5.gif)
+##
+***6. Delete movies***
+##
+![](gif-demo/movie6.gif)
+##
+***7. Types management***
+##
+![](gif-demo/movie7.gif)
 ##
 The end.
