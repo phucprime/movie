@@ -7,7 +7,6 @@ import {
 import MovieCard from '../movieCard/MovieCard'
 import Api from '../Api'
 
-// render từng phim card (MovieCard) hiển thị trên trang chủ
 function ACol(props) {
     return (
         <div>
@@ -19,7 +18,6 @@ function ACol(props) {
     )
 }
 
-// chia mỗi dòng trên trang chủ hiển thị 4 phim card 
 function Rows(props) {
     let cols = [];
     const rows = [];
@@ -48,7 +46,6 @@ class MovieCategoryList extends React.Component {
         }
     }
 
-    // khi component tải xong, gửi danh sách các phim trong cùng category
     componentDidMount() {
         console.log("Component didmount called");
         this.fetchDataCount(this.props.match.params.type);
@@ -71,7 +68,6 @@ class MovieCategoryList extends React.Component {
         this.fetchData(pageNumber - 1);
     }
 
-    // đếm số lượng phim của một thể loại
     fetchDataCount(type) {
         fetch(Api.typeCount(type), {
             method: 'GET',
@@ -85,7 +81,6 @@ class MovieCategoryList extends React.Component {
             .catch(error => console.error('Error:', error));
     }
 
-    // lấy tất cả phim
     fetchData(type, page) {
         fetch(Api.categoryList(type, page), {
             method: 'GET',

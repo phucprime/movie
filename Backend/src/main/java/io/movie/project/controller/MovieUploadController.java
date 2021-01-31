@@ -15,6 +15,7 @@ import io.movie.project.services.StorageService;
 import io.movie.project.utils.ResultUtil;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,5 +75,24 @@ public class MovieUploadController {
                 MvcUriComponentsBuilder.fromMethodName(
                         MovieUploadController.class, "serveMovie", file.getOriginalFilename())
                         .build().toString());
+    }
+
+    @PostMapping("/delete-file/{title}")
+    public Result<String> deleteMovie(@PathVariable("title") String title) {
+        File file = storageProperties.getSourceFile(title);
+        storageService.delete(file);
+        return ResultUtil.success(ResultEnum.DELETE_FILE_OK);
+    }
+
+    @PostMapping(value = "/get-file/{title}")
+    public Result<String> getFile(@PathVariable("title") String title){
+        File file = storageProperties.getSourceFile(title);
+        if(!file.exists()){
+            return ResultUtil.error(ResultEnum.LOAD_RESOURCE_FAILED);
+        }
+        return ResultUtil.success(ResultEnum.LOAD_RESOURCE_OK,
+                MvcUriComponentsBuilder.fromMethodName(
+                        MovieUploadController.class, "serveMovie", title)
+                        .build().toString() + ".mp4");
     }
 }

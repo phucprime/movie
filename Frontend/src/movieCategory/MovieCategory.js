@@ -25,7 +25,6 @@ class MovieCategory extends React.Component {
         }
     }
 
-    // lấy danh sách phim
     componentDidMount() {
         this.setState({isLoading: true});
         fetch(Api.types(), {

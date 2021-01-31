@@ -178,7 +178,10 @@ class TypesManagement extends React.Component{
                     console.log(`error message: ${info.msg}`);
                 } else {
                     message.success(`${info.msg}`);
-                    this.componentDidMount();
+                    //this.componentDidMount();
+                    this.setState({
+                        data: this.state.data.filter(type => type !== typeDelete)
+                    });
                 }
                 this.setState({deleteLoading: false});
             });
@@ -307,7 +310,7 @@ class TypesManagement extends React.Component{
                                 <FormItem
                                     {...formItemLayout}
                                     label="Type Name"
-                                    >
+                                >
                                     {getFieldDecorator('typeUpdate', {
                                         initialValue: this.state.itemData,
                                         rules: [{required: true}]

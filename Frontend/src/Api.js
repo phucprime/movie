@@ -26,6 +26,10 @@ const Api = {
 
     'deleteType': (type) => `${root}/delete-type/${type}`,
 
+    'getFile': (title) => `${root}/get-file/${title}`,
+
+    'deleteFile': (title) => `${root}/delete-file/${title}`,
+
     'updateType': (oldType) => `${root}/update-type/${oldType}`,
 
     'typeCount': (type) => `${root}/count/${type}`,

@@ -67,7 +67,6 @@ class MovieResourceManage extends React.Component {
         this.fetchData(pageNumber - 1);
     }
 
-    // khi duyệt qua các trang, lấy số lượng phim trên trang hiện tại
     fetchDataCount() {
         fetch(Api.movieCount(), {
             method: 'GET',
@@ -117,6 +116,47 @@ class MovieResourceManage extends React.Component {
 
     handleRecordsClick(e) {
         this.setIsModalVisible(true);
+    }
+
+    handleGetUploadedFile(title){
+        fetch(Api.getFile(title), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+        }).then(response => response.json())
+            .then(info => {
+                if(info.status !== 1){
+                    message.error(`${info.msg}`);
+                    this.setState({ fileList: title + ".mp4 not existed" });
+                } else{
+                    message.success(`${info.msg}`);
+                    this.setState({ fileList: info.data });
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    handleDeleteFile() {
+        const title = this.state.itemData.title;
+        fetch(Api.deleteFile(title), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+        }).then(response => response.json())
+            .then(info => {
+                if(info.status !== 1){
+                    message.error(`${info.msg}`)
+                } else{
+                    message.success(`${info.msg}`)
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
 
     handleSubmit(e) {
@@ -359,14 +399,12 @@ class MovieResourceManage extends React.Component {
 
     render() {
         let increaseKey = 10;
-        // count: count movies for pagination
-        let {data, count, typeData} = this.state;
+        let {data, count, typeData, fileList} = this.state;
 
         // chuyển đổi this bên trong thân hàm vì khi gọi không đồng bộ thì nó không phải là this bên ngoài
         const that = this;
         const {getFieldDecorator} = this.props.form;
 
-        // input layout
         const formItemLayout = {
             labelCol: {span: 6},
             wrapperCol: {span: 14},
@@ -421,7 +459,7 @@ class MovieResourceManage extends React.Component {
                             <Divider orientation="left">
                                 <h2>Movie Manager</h2>
                             </Divider>
-                            <Tabs defaultActiveKey="1" tabPosition='left' onTabClick={() => this.fetchTypeData()}>
+                            <Tabs defaultActiveKey="2" tabPosition='left' onTabClick={() => this.fetchTypeData()}>
                                 <TabPane tab={ <span><Icon type="cloud-upload"/>Upload Movie</span>} key='1'>
                                     <div id="info">
                                         <Form onSubmit={this.handleSubmit.bind(this)}>
@@ -592,7 +630,7 @@ class MovieResourceManage extends React.Component {
                                         </Form>
                                     </div>
                                 </TabPane>
-                                <TabPane tab={<span><Icon type="edit"/>Update Movie</span>} key={increaseKey++}>
+                                <TabPane tab={<span><Icon type="edit"/>Update Movie</span>} key='2'>
                                     <Row>
                                             <Col>
                                             <table style={{ textAlign: 'center', width:'100%' }}>
@@ -642,9 +680,10 @@ class MovieResourceManage extends React.Component {
                                                                     <td>
                                                                         <Button className="btn btn-dark" 
                                                                                 onClick={
-                                                                                  () => { 
+                                                                                  () => {
                                                                                         this.handleRecordsClick(this);
                                                                                         this.setItemData(item);
+                                                                                        this.handleGetUploadedFile(item.title);
                                                                                     }
                                                                                 }
                                                                                 style={{ cursor:'pointer' }}
@@ -825,15 +864,16 @@ class MovieResourceManage extends React.Component {
                                                             <FormItem wrapperCol={{span: 12, offset: 6}}>
                                                                 <Upload>
                                                                     <Button icon='upload'>
-                                                                        Upload new file
+                                                                        Upload a new file
                                                                     </Button>
                                                                 </Upload>
                                                                 <span style={{ backgroundColor: 'lightblue' }}>
-                                                                    <Icon type='link' /> {this.state.itemData.title} 
+                                                                    <Icon type='link' /> {[...fileList]}
                                                                     <Popconfirm
                                                                         title='Are you sure?'
                                                                         okText='Yes'
                                                                         cancelText='No'
+                                                                        onConfirm={this.handleDeleteFile.bind(this)}
                                                                     >
                                                                         <Icon style={{ position: 'relative', right:'-5%', 
                                                                                         color:'red', cursor:'pointer' }} 

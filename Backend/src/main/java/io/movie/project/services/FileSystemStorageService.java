@@ -1,5 +1,7 @@
 package io.movie.project.services;
 
+import io.movie.project.enums.ResultEnum;
+import io.movie.project.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -100,5 +102,20 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
+
+    @Override
+    public void delete(File file){
+        try {
+            if (!file.exists()) {
+                throw new StorageException(-1, "Failed to delete " + file.getName());
+            }
+            Path path = rootLocation.resolve(file.getName());
+            Files.delete(path); // delete file in storage/location
+            file.delete(); // delete file in storage/source
+        } catch (Exception e) {
+            throw new StorageException(-1, file.getName()
+                    .replaceFirst("[.][^.]+$", "") +  " no longer existed", e);
+        }
     }
 }
