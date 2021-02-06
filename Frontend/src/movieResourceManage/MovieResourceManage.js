@@ -52,6 +52,15 @@ class MovieResourceManage extends React.Component {
             modalIsVisible: false,
             itemData: [],
             typeData: [],
+            defaultFileList: [
+                {
+                  uid: '1',
+                  name: '',
+                  status: 'done',
+                  response: 'Server Error',
+                  url: '',
+                }
+              ]
         };
     }
 
@@ -129,11 +138,21 @@ class MovieResourceManage extends React.Component {
         }).then(response => response.json())
             .then(info => {
                 if(info.status !== 1){
-                    message.error(`${info.msg}`);
+                    console.log(`${info.msg}`);
                     this.setState({ fileList: title + ".mp4 not existed" });
                 } else{
-                    message.success(`${info.msg}`);
+                    console.log(`${info.msg}`);
                     this.setState({ fileList: info.data });
+                    this.setState({
+                        defaultFileList: [
+                        {
+                          uid: '1',
+                          name: title,
+                          status: 'done',
+                          response: 'Server Error',
+                          url: info.data,
+                        }
+                      ]})
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -445,6 +464,23 @@ class MovieResourceManage extends React.Component {
                     .catch(error => console.error('Error: ', error));
             },
         };
+
+        const uploadedProps = {
+            onChange({ file, fileList }) {
+              if (file.status !== 'uploading') {
+                console.log(file, fileList);
+              }
+            },
+            defaultFileList: [
+                {
+                  uid: '1',
+                  name: this.state.fileList,
+                  status: 'done',
+                  response: 'Server Error',
+                  url: this.state.fileList,
+                }
+              ],
+          };
 
         return (
             <div>
@@ -862,7 +898,7 @@ class MovieResourceManage extends React.Component {
                                                                 )}
                                                             </FormItem>
                                                             <FormItem wrapperCol={{span: 12, offset: 6}}>
-                                                                <Upload>
+                                                                <Upload defaultFileList={this.state.defaultFileList}>
                                                                     <Button icon='upload'>
                                                                         Upload a new file
                                                                     </Button>
