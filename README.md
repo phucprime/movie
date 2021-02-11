@@ -1,4 +1,4 @@
-## React JS (Antd Design) + Java Spring Boot
+## React JS (Ant Design) + Java Spring Boot
 ##
 ***1. Home page & main feature***
 ##
